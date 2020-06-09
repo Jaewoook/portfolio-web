@@ -43,6 +43,7 @@ export const Hero = () => {
                 setUser(user + "Jaewook Ahn".charAt(typeIndex));
             }, 70 + Math.random() * 250);
         }
+    //  eslint-disable-next-line react-hooks/exhaustive-deps
     }, [user]);
 
     return (
