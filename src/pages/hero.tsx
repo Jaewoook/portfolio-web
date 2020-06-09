@@ -1,7 +1,10 @@
 import React from "react";
 import styled, { keyframes } from "styled-components";
 import { Avatar, Typography } from "antd";
+import { RightCircleOutlined } from "@ant-design/icons";
 import * as images from "../assets/images";
+
+const USERNAME = "Jaewook Ahn";
 
 const Container = styled.div`
     width: 100vw;
@@ -23,12 +26,20 @@ const fadeIn = keyframes`
 `;
 
 const TextBlock = styled.div`
-    width: 260px;
+    width: 275px;
+    height: 46px;
     margin-top: 24px;
     > h1 {
         color: #fff;
-        animation: ${fadeIn} 2s;
+        animation: ${fadeIn} 1.5s;
     }
+`;
+
+const EnterButton = styled(RightCircleOutlined)`
+    margin-top: 16px;
+    color: #fff;
+    font-size: 24px;
+    cursor: pointer;
 `;
 
 export const Hero = () => {
@@ -37,11 +48,19 @@ export const Hero = () => {
 
     React.useEffect(() => {
         console.log("Triggered!", user);
-        if (typeIndex <= "Jaewook Ahn".length) {
+        if (typeIndex <= USERNAME.length) {
             setTimeout(() => {
                 setTypeIndex(typeIndex + 1);
-                setUser(user + "Jaewook Ahn".charAt(typeIndex));
-            }, 70 + Math.random() * 250);
+                setUser(user + USERNAME.charAt(typeIndex));
+            }, 50);
+        }
+
+        if (user.includes(USERNAME)) {
+            if (user.includes("_")) {
+                setTimeout(() => setUser(USERNAME), 400);
+            } else {
+                setTimeout(() => setUser(`${USERNAME}_`), 400);
+            }
         }
     //  eslint-disable-next-line react-hooks/exhaustive-deps
     }, [user]);
@@ -52,6 +71,7 @@ export const Hero = () => {
             <TextBlock>
                 <Typography.Title >{user}</Typography.Title>
             </TextBlock>
+            <EnterButton />
         </Container>
     );
 };
