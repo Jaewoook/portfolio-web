@@ -3,6 +3,7 @@ import styled, { keyframes } from "styled-components";
 import { Avatar, Typography } from "antd";
 import { RightCircleOutlined } from "@ant-design/icons";
 import * as images from "../assets/images";
+import { log } from "../utils";
 
 const USERNAME = "Jaewook Ahn";
 
@@ -47,7 +48,7 @@ export const Hero = () => {
     const [typeIndex, setTypeIndex] = React.useState(0);
 
     React.useEffect(() => {
-        console.log("Triggered!", user);
+        log.v("Triggered!", user);
         if (typeIndex <= USERNAME.length) {
             setTimeout(() => {
                 setTypeIndex(typeIndex + 1);
