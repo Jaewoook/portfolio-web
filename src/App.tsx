@@ -1,12 +1,13 @@
 import "antd/dist/antd.css";
 import React from "react";
 import { Layout } from "./components";
-import { Hero } from "./pages";
+import { Hero, Main } from "./pages";
 import { HeaderContext } from "./contexts";
 import { log } from "./utils";
 
 interface State {
     headerContext: HeaderContext;
+    currentPage: string;
 }
 
 class App extends React.Component<{}, State> {
@@ -17,7 +18,8 @@ class App extends React.Component<{}, State> {
             headerContext: {
                 show: true,
                 setShow: this.handleSetShow,
-            }
+            },
+            currentPage: "hero",
         };
     }
 
@@ -32,11 +34,17 @@ class App extends React.Component<{}, State> {
         }));
     }
 
+    handleEnter = () => {
+        this.setState({ currentPage: "main" });
+    }
+
     render() {
+        const { currentPage } = this.state;
         return (
             <HeaderContext.Provider value={this.state.headerContext}>
                 <Layout>
-                    <Hero />
+                    {currentPage === "hero" ? <Hero onEnter={this.handleEnter} /> : null}
+                    {currentPage === "main" ? <Main /> : null}
                 </Layout>
             </HeaderContext.Provider>
         );

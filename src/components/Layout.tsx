@@ -8,17 +8,29 @@ interface Props {
     children: React.ReactNode;
 }
 
-const Container = styled(LayoutWrapper)`
+interface ColorModeProps {
+    colorMode: "light" | "dark";
+}
+
+const Container = styled(LayoutWrapper)<ColorModeProps>`
     width: 100vw;
     height: 100vh;
+    background-color: #000;
+`;
+
+const Wrapper = styled.div`
+    width: 100%;
+    height: 100%;
 `;
 
 export const Layout: React.FC<Props> = ({ children }) => {
     const { show } = React.useContext(HeaderContext);
     return (
-        <Container>
+        <Container colorMode="dark">
             <Header display={show ? "flex": "none"} />
-            {children}
+            <Wrapper>
+                {children}
+            </Wrapper>
         </Container>
     )
 };

@@ -13,7 +13,6 @@ const USERNAME = "Jaewook Ahn";
 const Container = styled.div`
     width: 100%;
     height: 100%;
-    background-color: #000;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -90,10 +89,19 @@ const OptionButton = styled.div`
     }
 `;
 
-export const Hero = () => {
+interface Props {
+    onEnter: () => void;
+}
+
+export const Hero: React.FC<Props> = (props) => {
+    const { onEnter } = props;
     const headerContext = React.useContext(HeaderContext);
     const [user, setUser] = React.useState("")
     const [typeIndex, setTypeIndex] = React.useState(0);
+
+    const handleEnter = React.useCallback(() => {
+        onEnter();
+    }, [onEnter]);
 
     React.useEffect(() => {
         if (typeIndex <= USERNAME.length) {
@@ -118,7 +126,7 @@ export const Hero = () => {
         return () => {
             headerContext.setShow(true);
         };
-    }, []);
+    });
 
     return (
         <Container>
@@ -127,7 +135,7 @@ export const Hero = () => {
                 <TextBlock>
                     <Typography.Title >{user}</Typography.Title>
                 </TextBlock>
-                <EnterButton />
+                <EnterButton onClick={handleEnter} />
             </Section>
             <Section>
                 <OptionContainer>
