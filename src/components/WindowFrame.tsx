@@ -10,6 +10,7 @@ import {
     position, PositionProps,
 } from "styled-system";
 import { Typography } from "antd";
+import Draggable from "react-draggable";
 
 const zoomIn = keyframes`
     from {
@@ -35,6 +36,7 @@ const Container = styled.div<ContainerProps>`
     background-color: #333;
     animation: ${zoomIn} 0.15s ease-in-out;
     border-radius: 4px;
+    box-shadow: rgba(0, 0, 0, 0.55) 0px 20px 68px;
 `;
 
 const StatusBarWrapper = styled.div`
@@ -89,12 +91,14 @@ type Props = ContainerProps & {
 export const WindowFrame: React.FC<Props> = (props) => {
     const { title, children, ...styles } = props;
     return (
-        <Container {...styles}>
-            <StatusBar>
-                {title}
-            </StatusBar>
-            {children}
-        </Container>
+        <Draggable>
+            <Container {...styles}>
+                <StatusBar>
+                    {title}
+                </StatusBar>
+                {children}
+            </Container>
+        </Draggable>
     );
 };
 
