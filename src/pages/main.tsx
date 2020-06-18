@@ -65,6 +65,16 @@ export const Main = () => {
                     </Summary>
                 </InfoWrapper>
             </WindowFrame>
+            <WindowFrame title="Careers">
+                <InfoWrapper>
+
+                </InfoWrapper>
+            </WindowFrame>
+            <WindowFrame left="calc(50% + 300px)" title="Activities">
+                <InfoWrapper>
+
+                </InfoWrapper>
+            </WindowFrame>
         </Container>
     );
 };
