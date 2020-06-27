@@ -72,10 +72,14 @@ const StatusBarWrapper = styled.div`
     }
 `;
 
-const StatusBar: React.FC = ({ children }) => {
+interface StatusBarProps {
+    onCloseClick: () => void;
+}
+
+const StatusBar: React.FC<StatusBarProps> = ({ children, onCloseClick }) => {
     return (
         <StatusBarWrapper>
-            <div className="statusbar close"></div>
+            <div className="statusbar close" onClick={onCloseClick}></div>
             <div className="statusbar min"></div>
             <div className="statusbar max"></div>
             <Typography.Text >{children}</Typography.Text>
@@ -90,23 +94,24 @@ type Props = ContainerProps & {
 };
 
 export const WindowFrame: React.FC<Props> = (props) => {
+    const [show, setShow] = React.useState(true);
     const { title, hideStatusBar, children, ...styles } = props;
-    return (
+    return show ? (
         <Draggable>
             <Container {...styles}>
-                {!hideStatusBar ? <StatusBar>
+                {!hideStatusBar ? <StatusBar onCloseClick={() => setShow(false)}>
                     {title}
                 </StatusBar> : null}
                 {children}
             </Container>
         </Draggable>
-    );
+    ) : null;
 };
 
 WindowFrame.defaultProps = {
     width: 300,
     height: 500,
-    top: "2%0",
+    top: "20%",
     left: "10%",
     position: ["static", "absolute", "absolute"],
 }
