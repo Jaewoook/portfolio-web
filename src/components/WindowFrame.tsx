@@ -33,16 +33,27 @@ const Container = styled.div<ContainerProps>`
     ${right}
     ${bottom}
     ${left}
+    position: relative;
     background-color: #333;
     animation: ${zoomIn} 0.15s ease-in-out;
     border-radius: 4px;
     box-shadow: rgba(0, 0, 0, 0.55) 0px 20px 68px;
 `;
 
+const Wrapper = styled.div`
+    width: 100%;
+    height: 100%;
+    overflow: scroll;
+    padding-top: 24px;
+`;
+
 const StatusBarWrapper = styled.div`
     width: 100%;
     height: 24px;
-    position: relative;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -102,7 +113,9 @@ export const WindowFrame: React.FC<Props> = (props) => {
                 {!hideStatusBar ? <StatusBar onCloseClick={() => setShow(false)}>
                     {title}
                 </StatusBar> : null}
-                {children}
+                <Wrapper>
+                    {children}
+                </Wrapper>
             </Container>
         </Draggable>
     ) : null;
