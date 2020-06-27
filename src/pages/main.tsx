@@ -1,11 +1,14 @@
 /*  eslint-disable jsx-a11y/accessible-emoji */
 import React from "react";
 import styled from "styled-components/macro";
-import { alignItems, AlignItemsProps, space, SpaceProps } from "styled-system";
-import { Typography } from "antd";
+import { alignItems, AlignItemsProps, flexDirection, FlexDirectionProps, space, SpaceProps } from "styled-system";
+import { Spin, Typography } from "antd";
+import { GithubFilled, LoadingOutlined } from "@ant-design/icons";
 
 import { WindowFrame } from "../components";
 import { HeaderContext } from "../contexts";
+import { getPinnedRepositories } from "../apis/GetPinnedRepositories";
+import { Repository } from "../models/Repository";
 
 const Container = styled.div`
     width: 100%;
@@ -16,13 +19,14 @@ const Container = styled.div`
     position: relative;
 `;
 
-const InfoWrapper = styled.div`
+const InfoWrapper = styled.div<FlexDirectionProps>`
     width: 100%;
     height: 100%;
     display: flex;
+    ${flexDirection}
     align-items: center;
     padding: 24px 18px;
-    h1, h2, span {
+    .ant-typography {
         color: white;
     }
     h2 {
@@ -41,16 +45,87 @@ const Summary = styled.div<AlignItemsProps & SpaceProps>`
     }
 `;
 
+const GitHubRepoWrapper = styled.div`
+    width: 100%;
+    margin: 4px 0;
+    padding: 12px 10px;
+    display: flex;
+    flex-direction: column;
+    border: 1px rgba(255, 255, 255, 0.25) solid;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: all 0.15s ease-out;
+    :hover {
+        background-color: rgba(255, 255, 255, 0.02);
+    }
+    > .repo-title {
+        display: flex;
+        align-items: baseline;
+        margin-bottom: 8px;
+        > .ant-typography {
+            margin-left: 6px;
+            font-size: 16px;
+        }
+    }
+    > .ant-typography {
+        font-size: 12px;
+    }
+`;
+
+const GitHubRepo: React.FC<Repository> = (props) => {
+    return (
+        <GitHubRepoWrapper onClick={() => window.open(props.url)}>
+            <div className="repo-title">
+                <GithubFilled style={{ color: "#fff", fontSize: 16 }} />
+                <Typography.Text>{props.name}</Typography.Text>
+            </div>
+            <Typography.Text>{props.description}</Typography.Text>
+        </GitHubRepoWrapper>
+    );
+}
+
+const Repositories: React.FC = () => {
+    const [loading, setLoading] = React.useState(true);
+    const [repositories, setRepositories] = React.useState<Repository[]>([]);
+
+    React.useEffect(() => {
+        (async () => {
+            try {
+                const res = await getPinnedRepositories();
+                setRepositories(res.data);
+            } catch (err) {
+                console.error(err);
+            } finally {
+                setLoading(false);
+            }
+        })();
+    }, []);
+
+    return <WindowFrame height="400px" left="30px" top="10%" title="Activities">
+        <InfoWrapper flexDirection="column">
+            <Typography.Title level={4}>Pinned Repositories</Typography.Title>
+            {loading ? (
+                <Spin indicator={<LoadingOutlined spin />} />
+            ) : repositories.length ? repositories.map((repo, i) => (
+                <GitHubRepo key={i} {...repo} />
+            )) : <Typography.Text>No repository</Typography.Text>}
+        </InfoWrapper>
+    </WindowFrame>;
+};
+
 export const Main = () => {
     const headerContext = React.useContext(HeaderContext);
 
     React.useEffect(() => {
-        headerContext.setShow(true);
-    }, []);
+        if (!headerContext.show) {
+            headerContext.setShow(true);
+        }
+    }, [headerContext]);
 
     return (
         <Container>
-            <WindowFrame width="500px" height="auto" left="calc(50% - 250px)" title="Basic Info">
+            <Repositories />
+            <WindowFrame width="500px" height="auto" left="calc(50% - 250px)" top="calc(50% - 100px)" title="Basic Info" hideStatusBar>
                 <InfoWrapper>
                     <Summary alignItems="center">
                         <Typography.Title><span>👨‍💻</span></Typography.Title>
@@ -65,16 +140,11 @@ export const Main = () => {
                     </Summary>
                 </InfoWrapper>
             </WindowFrame>
-            <WindowFrame title="Careers">
+            {/* <WindowFrame title="Careers">
                 <InfoWrapper>
 
                 </InfoWrapper>
-            </WindowFrame>
-            <WindowFrame left="calc(50% + 300px)" title="Activities">
-                <InfoWrapper>
-
-                </InfoWrapper>
-            </WindowFrame>
+            </WindowFrame> */}
         </Container>
     );
 };
