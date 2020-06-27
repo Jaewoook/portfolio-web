@@ -70,6 +70,22 @@ const GitHubRepoWrapper = styled.div`
     > .ant-typography {
         font-size: 12px;
     }
+    > .repo-language {
+        margin-top: 12px;
+        display: flex;
+        align-items: baseline;
+
+        > .lang-color {
+            width: 8px;
+            height: 8px;
+            border-radius: 4px;
+            margin-right: 4px;
+        }
+        > .ant-typography {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 10px;
+        }
+    }
 `;
 
 const GitHubRepo: React.FC<Repository> = (props) => {
@@ -80,6 +96,12 @@ const GitHubRepo: React.FC<Repository> = (props) => {
                 <Typography.Text>{props.name}</Typography.Text>
             </div>
             <Typography.Text>{props.description}</Typography.Text>
+            {props.primaryLanguage.name ? (
+                <div className="repo-language">
+                    <div className="lang-color" style={{ backgroundColor: props.primaryLanguage.color }} />
+                    <Typography.Text>{props.primaryLanguage.name}</Typography.Text>
+                </div>
+            ) : null}
         </GitHubRepoWrapper>
     );
 }
@@ -101,7 +123,7 @@ const Repositories: React.FC = () => {
         })();
     }, []);
 
-    return <WindowFrame height="400px" left="30px" top="10%" title="Activities">
+    return <WindowFrame height="450px" left="30px" top="10%" title="Activities">
         <InfoWrapper flexDirection="column">
             <Typography.Title level={4}>Pinned Repositories</Typography.Title>
             {loading ? (
