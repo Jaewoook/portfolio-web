@@ -89,6 +89,27 @@ const OptionButton = styled.div`
     }
 `;
 
+const BadgeWrapper = styled.div`
+    margin-top: -4px;
+    padding: 1px 3px;
+    background-color: #ff4d4f;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1;
+    .ant-typography {
+        color: white;
+        font-size: 10px;
+        line-height: 12px;
+    }
+`;
+
+const Badge: React.FC = (props) => (
+    <BadgeWrapper>
+        <Typography.Text>{props.children}</Typography.Text>
+    </BadgeWrapper>
+);
+
 interface Props {
     onEnter: () => void;
 }
@@ -132,6 +153,7 @@ export const Hero: React.FC<Props> = (props) => {
         <Container>
             <Section style={{ flex: 1, justifyContent: "center" }}>
                 <User size={72} src={images.profile} />
+                <Badge>Alpha</Badge>
                 <TextBlock>
                     <Typography.Title >{user}</Typography.Title>
                 </TextBlock>
