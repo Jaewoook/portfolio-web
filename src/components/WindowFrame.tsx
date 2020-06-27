@@ -85,17 +85,18 @@ const StatusBar: React.FC = ({ children }) => {
 
 type Props = ContainerProps & {
     title?: string;
+    hideStatusBar?: boolean;
     children?: React.ReactNode;
 };
 
 export const WindowFrame: React.FC<Props> = (props) => {
-    const { title, children, ...styles } = props;
+    const { title, hideStatusBar, children, ...styles } = props;
     return (
         <Draggable>
             <Container {...styles}>
-                <StatusBar>
+                {!hideStatusBar ? <StatusBar>
                     {title}
-                </StatusBar>
+                </StatusBar> : null}
                 {children}
             </Container>
         </Draggable>
