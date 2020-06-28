@@ -1,7 +1,12 @@
 /*  eslint-disable jsx-a11y/accessible-emoji */
 import React from "react";
 import styled from "styled-components/macro";
-import { alignItems, AlignItemsProps, flexDirection, FlexDirectionProps, space, SpaceProps } from "styled-system";
+import {
+    alignItems, AlignItemsProps,
+    display, DisplayProps,
+    flexDirection, FlexDirectionProps,
+    space, SpaceProps
+} from "styled-system";
 import { Spin, Typography } from "antd";
 import { GithubFilled, LoadingOutlined } from "@ant-design/icons";
 
@@ -10,14 +15,18 @@ import { HeaderContext } from "../contexts";
 import { getPinnedRepositories } from "../apis/GetPinnedRepositories";
 import { Repository } from "../models/Repository";
 
-const Container = styled.div`
+const Container = styled.div<DisplayProps>`
     width: 100%;
     height: 100%;
-    display: flex;
+    ${display}
+    flex-direction: column;
     align-items: center;
-    justify-content: center;
     position: relative;
 `;
+
+Container.defaultProps = {
+    display: ["flex", "block"],
+};
 
 const InfoWrapper = styled.div<FlexDirectionProps>`
     width: 100%;
@@ -150,8 +159,8 @@ export const Main = () => {
     return (
         <Container>
             <Repositories />
-            <WindowFrame width="500px" height="auto" left="calc(50% - 250px)" top="calc(50% - 100px)" title="Basic Info" hideStatusBar>
-                <InfoWrapper>
+            <WindowFrame width={["350px", "500px"]} height="auto" left="calc(50% - 250px)" top="calc(50% - 100px)" title="Basic Info" hideStatusBar>
+                <InfoWrapper flexDirection={["column", "row"]}>
                     <Summary alignItems="center">
                         <Typography.Title><span>👨‍💻</span></Typography.Title>
                         <Typography.Title level={2}>Jaewook Ahn</Typography.Title>

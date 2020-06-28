@@ -33,7 +33,6 @@ const Container = styled.div<ContainerProps>`
     ${right}
     ${bottom}
     ${left}
-    position: relative;
     background-color: #333;
     animation: ${zoomIn} 0.15s ease-in-out;
     border-radius: 4px;
@@ -126,5 +125,5 @@ WindowFrame.defaultProps = {
     height: 500,
     top: "20%",
     left: "10%",
-    position: ["static", "absolute", "absolute"],
+    position: ["static", "absolute"],
 }
