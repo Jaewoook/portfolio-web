@@ -65,10 +65,13 @@ const GitHubRepoWrapper = styled.div`
         > .ant-typography {
             margin-left: 6px;
             font-size: 16px;
+            font-weight: 500;
         }
     }
     > .ant-typography {
         font-size: 12px;
+        font-weight: 300;
+        color: rgba(255, 255, 255, 0.8);
     }
     > .repo-language {
         margin-top: 12px;
