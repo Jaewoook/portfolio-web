@@ -1,4 +1,5 @@
 import "antd/dist/antd.css";
+import "./App.css";
 import React from "react";
 import { Layout } from "./components";
 import { Hero, Main } from "./pages";
