@@ -8,9 +8,13 @@ import {
     bottom, BottomProps,
     left, LeftProps,
     position, PositionProps,
+    flexDirection, FlexDirectionProps,
+    padding, PaddingProps,
+    zIndex,
 } from "styled-system";
 import { Typography } from "antd";
 import Draggable from "react-draggable";
+import { WindowContext } from "../contexts";
 
 const zoomIn = keyframes`
     from {
@@ -33,6 +37,7 @@ const Container = styled.div<ContainerProps>`
     ${right}
     ${bottom}
     ${left}
+    ${zIndex}
     background-color: #333;
     animation: ${zoomIn} 0.15s ease-in-out;
     border-radius: 4px;
@@ -97,6 +102,28 @@ const StatusBar: React.FC<StatusBarProps> = ({ children, onCloseClick }) => {
     );
 };
 
+export const InfoWrapper = styled.div<FlexDirectionProps & PaddingProps>`
+    width: 100%;
+    height: 100%;
+    display: flex;
+    ${flexDirection}
+    align-items: center;
+    ${padding}
+    .ant-typography {
+        color: white;
+    }
+    h2 {
+        margin: 0 !important;
+    }
+`;
+
+InfoWrapper.defaultProps = {
+    paddingTop: "24px",
+    paddingRight: "18px",
+    paddingBottom: "24px",
+    paddingLeft: "18px",
+};
+
 type Props = ContainerProps & {
     title?: string;
     hideStatusBar?: boolean;
@@ -104,11 +131,22 @@ type Props = ContainerProps & {
 };
 
 export const WindowFrame: React.FC<Props> = (props) => {
-    const [show, setShow] = React.useState(true);
     const { title, hideStatusBar, children, ...styles } = props;
+    const windowContext = React.useContext(WindowContext.Context);
+    const [show, setShow] = React.useState(true);
+    const [zIndex, setZIndex] = React.useState(0);
+
+    const handleActive = React.useCallback(() => {
+        windowContext.setTopWindow(title ?? "");
+    }, [windowContext, title]);
+
+    React.useEffect(() => {
+        const newZIndex = windowContext.windows.indexOf(title ?? "");
+        setZIndex(newZIndex);
+    }, [windowContext.windows, title, setZIndex]);
     return show ? (
-        <Draggable>
-            <Container {...styles}>
+        <Draggable onMouseDown={handleActive}>
+            <Container {...styles} zIndex={zIndex}>
                 {!hideStatusBar ? <StatusBar onCloseClick={() => setShow(false)}>
                     {title}
                 </StatusBar> : null}

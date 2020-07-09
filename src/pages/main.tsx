@@ -4,16 +4,16 @@ import styled from "styled-components/macro";
 import {
     alignItems, AlignItemsProps,
     display, DisplayProps,
-    flexDirection, FlexDirectionProps,
-    space, SpaceProps
+    space, SpaceProps,
 } from "styled-system";
-import { Spin, Typography } from "antd";
+import { Spin, Tabs, Typography } from "antd";
 import { GithubFilled, LoadingOutlined } from "@ant-design/icons";
 
-import { WindowFrame } from "../components";
-import { HeaderContext } from "../contexts";
+import { WindowFrame, InfoWrapper } from "../components";
+import { HeaderContext, WindowContext } from "../contexts";
 import { getPinnedRepositories } from "../apis/GetPinnedRepositories";
 import { Repository } from "../models/Repository";
+import { log } from "../utils";
 
 const Container = styled.div<DisplayProps>`
     width: 100%;
@@ -27,21 +27,6 @@ const Container = styled.div<DisplayProps>`
 Container.defaultProps = {
     display: ["flex", "block"],
 };
-
-const InfoWrapper = styled.div<FlexDirectionProps>`
-    width: 100%;
-    height: 100%;
-    display: flex;
-    ${flexDirection}
-    align-items: center;
-    padding: 24px 18px;
-    .ant-typography {
-        color: white;
-    }
-    h2 {
-        margin: 0 !important;
-    }
-`;
 
 const Summary = styled.div<AlignItemsProps & SpaceProps>`
     width: 100%;
@@ -118,7 +103,7 @@ const GitHubRepo: React.FC<Repository> = (props) => {
     );
 }
 
-const Repositories: React.FC = () => {
+const Activities: React.FC = () => {
     const [loading, setLoading] = React.useState(true);
     const [repositories, setRepositories] = React.useState<Repository[]>([]);
 
@@ -136,19 +121,71 @@ const Repositories: React.FC = () => {
     }, []);
 
     return <WindowFrame height="450px" left="30px" top="10%" title="Activities">
-        <InfoWrapper flexDirection="column">
-            <Typography.Title level={4}>Pinned Repositories</Typography.Title>
-            {loading ? (
-                <Spin indicator={<LoadingOutlined spin />} />
-            ) : repositories.length ? repositories.map((repo, i) => (
-                <GitHubRepo key={i} {...repo} />
-            )) : <Typography.Text>No repository</Typography.Text>}
+        <InfoWrapper paddingTop={0} flexDirection="column">
+            <Tabs size="small" defaultActiveKey="repositories">
+                <Tabs.TabPane tab="Repositories" key="repositories">
+                    {loading ? (
+                        <Spin indicator={<LoadingOutlined spin />} />
+                    ) : repositories.length ? repositories.map((repo, i) => (
+                        <GitHubRepo key={i} {...repo} />
+                    )) : <Typography.Text>No repository</Typography.Text>}
+                </Tabs.TabPane>
+                <Tabs.TabPane tab="Projects & Activities">
+
+                </Tabs.TabPane>
+            </Tabs>
+            {/* <Typography.Title level={4}>Pinned Repositories</Typography.Title> */}
         </InfoWrapper>
     </WindowFrame>;
 };
 
+const Careers: React.FC = () => {
+    return <WindowFrame width={["100%", "350px"]} title="Careers">
+        <InfoWrapper>
+
+        </InfoWrapper>
+    </WindowFrame>;
+};
+
+const WINDOW_KEYS = [
+    "Basic Info",
+    "Activities",
+    "Careers",
+];
+
 export const Main = () => {
     const headerContext = React.useContext(HeaderContext);
+    const [windowState, setWindowState] = React.useState<WindowContext>(WindowContext.defaultValue);
+
+    React.useEffect(() => {
+        const setTopWindow = (key: string) => {
+            log.v("WindowFrame", "setTopWIndow called");
+            if (!windowState?.windows.includes(key)) {
+                log.e("setTopWindow broken");
+                return;
+            }
+
+            const newWindows = [...windowState.windows.filter((w) => w !== key), key];
+            setWindowState({
+                ...windowState,
+                windows: newWindows,
+                currentTop: key,
+            });
+        };
+
+        if (!windowState.currentTop) {
+            setWindowState({
+                windows: WINDOW_KEYS,
+                currentTop: WINDOW_KEYS[0],
+                setTopWindow,
+            });
+        } else {
+            setWindowState({
+                ...windowState,
+                setTopWindow,
+            });
+        }
+    }, [windowState.windows]);
 
     React.useEffect(() => {
         if (!headerContext.show) {
@@ -157,28 +194,26 @@ export const Main = () => {
     }, [headerContext]);
 
     return (
-        <Container>
-            <Repositories />
-            <WindowFrame width={["350px", "500px"]} height="auto" left="calc(50% - 250px)" top="calc(50% - 100px)" title="Basic Info" hideStatusBar>
-                <InfoWrapper flexDirection={["column", "row"]}>
-                    <Summary alignItems="center">
-                        <Typography.Title><span>👨‍💻</span></Typography.Title>
-                        <Typography.Title level={2}>Jaewook Ahn</Typography.Title>
-                        <Typography.Text>Web Front-end developer</Typography.Text>
-                    </Summary>
-                    <Summary marginLeft="32px">
-                        <Typography.Text aria-label="main skillset">❤️ TypeScript, React, Serverless</Typography.Text>
-                        <Typography.Text aria-label="location">📍 Seoul, South Korea</Typography.Text>
-                        <Typography.Text aria-label="university">🎓 Kookmin University</Typography.Text>
-                        <Typography.Text aria-label="test">🤩 Running, Photograph, Beer</Typography.Text>
-                    </Summary>
-                </InfoWrapper>
-            </WindowFrame>
-            {/* <WindowFrame title="Careers">
-                <InfoWrapper>
-
-                </InfoWrapper>
-            </WindowFrame> */}
-        </Container>
+        <WindowContext.Context.Provider value={windowState}>
+            <Container>
+                <Activities />
+                <Careers />
+                <WindowFrame width={["350px", "500px"]} height="auto" left="calc(50% - 250px)" top="calc(50% - 100px)" title="Basic Info" hideStatusBar>
+                    <InfoWrapper flexDirection={["column", "row"]}>
+                        <Summary alignItems="center">
+                            <Typography.Title><span>👨‍💻</span></Typography.Title>
+                            <Typography.Title level={2}>Jaewook Ahn</Typography.Title>
+                            <Typography.Text>Web Front-end developer</Typography.Text>
+                        </Summary>
+                        <Summary marginLeft="32px">
+                            <Typography.Text aria-label="main skillset">❤️ TypeScript, React, Serverless</Typography.Text>
+                            <Typography.Text aria-label="location">📍 Seoul, South Korea</Typography.Text>
+                            <Typography.Text aria-label="university">🎓 Kookmin University</Typography.Text>
+                            <Typography.Text aria-label="test">🤩 Running, Photograph, Beer</Typography.Text>
+                        </Summary>
+                    </InfoWrapper>
+                </WindowFrame>
+            </Container>
+        </WindowContext.Context.Provider>
     );
 };
