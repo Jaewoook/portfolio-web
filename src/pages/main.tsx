@@ -134,9 +134,9 @@ const Activities: React.FC = () => {
         })();
     }, []);
 
-    return <WindowFrame width={["350px", "460px"]} height="385px" left="11.5%" top={null} bottom="15.3%" title="Activities">
+    return <WindowFrame width={["350px", "460px"]} height={["auto", "385px"]} left="8.5%" top={null} bottom="4%" title="Activities">
         <InfoWrapper paddingTop={0} flexDirection="column">
-            <Tabs size="small" defaultActiveKey="hackathons">
+            <Tabs size="small" defaultActiveKey="repositories">
                 <Tabs.TabPane tab="Repositories" key="repositories">
                     <TabContentWrapper>
                         {loading ? (
@@ -282,7 +282,7 @@ const Activities: React.FC = () => {
 };
 
 const Careers: React.FC = () => {
-    return <WindowFrame width={["350px", "600px"]} height={["auto", "430px"]} left="43%" top="43%" title="Careers">
+    return <WindowFrame width={["350px", "600px"]} height={["auto", "430px"]} left="39%" top="37%" title="Careers">
         <InfoWrapper flexDirection="column" alignItems="flex-start">
             <Typography.Title level={2}>Careers</Typography.Title>
             <Typography.Title level={4}>Salesboost</Typography.Title>
