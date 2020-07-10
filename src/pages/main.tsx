@@ -93,7 +93,6 @@ const TabContentWrapper = styled.div`
     overflow-y: scroll;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
 `;
 
 const GitHubRepo: React.FC<Repository> = (props) => {
