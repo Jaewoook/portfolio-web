@@ -130,7 +130,7 @@ const Activities: React.FC = () => {
         })();
     }, []);
 
-    return <WindowFrame width={["350px", "300px"]} height="350px" left="18.5%" top={null} bottom="13.3%" title="Activities">
+    return <WindowFrame width={["350px", "300px"]} height="385px" left="18.5%" top={null} bottom="13.3%" title="Activities">
         <InfoWrapper paddingTop={0} flexDirection="column">
             <Tabs size="small" defaultActiveKey="repositories">
                 <Tabs.TabPane tab="Repositories" key="repositories">
@@ -152,7 +152,7 @@ const Activities: React.FC = () => {
 };
 
 const Careers: React.FC = () => {
-    return <WindowFrame width={["350px", "460px"]} height={["auto", "580px"]} left="51%" top="27%" title="Careers">
+    return <WindowFrame width={["350px", "460px"]} height={["auto", "550px"]} left="51%" top="32%" title="Careers">
         <InfoWrapper flexDirection="column" alignItems="flex-start">
             <Typography.Title level={2}>Careers</Typography.Title>
             <Typography.Title level={4}>Salesboost</Typography.Title>
@@ -220,7 +220,7 @@ const Careers: React.FC = () => {
 
 const Profile: React.FC = () => {
     const [showContact, setSHowContact] = React.useState(false);
-    return <WindowFrame width={["350px", "550px"]} height="auto" maxHeight={showContact ? "274px" : "214px"} left="9.7%" top="7%" title="Basic Info" hideStatusBar>
+    return <WindowFrame width={["350px", "550px"]} height="auto" maxHeight={showContact ? "274px" : "214px"} left="9.7%" top="8.5%" title="Basic Info" hideStatusBar>
         <InfoWrapper flexDirection={["column", "row"]}>
             <Summary alignItems="center">
                 <Typography.Title><span>👨‍💻</span></Typography.Title>
