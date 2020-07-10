@@ -350,7 +350,7 @@ const Careers: React.FC = () => {
 
 const Profile: React.FC = () => {
     const [showContact, setSHowContact] = React.useState(false);
-    return <WindowFrame width={["350px", "550px"]} height="auto" maxHeight={showContact ? "274px" : "214px"} left="15.7%" top="8.5%" title="Basic Info" hideStatusBar>
+    return <WindowFrame width={["350px", "550px"]} height="auto" left="15.7%" top="8.5%" title="Basic Info" hideStatusBar>
         <InfoWrapper flexDirection={["column", "row"]}>
             <Summary alignItems="center">
                 <Typography.Title><span>👨‍💻</span></Typography.Title>
@@ -362,11 +362,11 @@ const Profile: React.FC = () => {
                 <Typography.Text aria-label="location">📍 Seoul, South Korea</Typography.Text>
                 <Typography.Text aria-label="university">🎓 Kookmin University</Typography.Text>
                 <Typography.Text aria-label="test">🤩 Running, Photograph, Beer</Typography.Text>
-                <Typography.Link onClick={() => setSHowContact(!showContact)} aria-label="contact">🤝 Contact</Typography.Link>
+                {/* <Typography.Link onClick={() => setSHowContact(!showContact)} aria-label="contact">🤝 Contact</Typography.Link>
                 {showContact ? <>
                     <Typography.Text>📞 +82-10-5438-7623</Typography.Text>
                     <Typography.Text>✈️ ajw4586@gmail.com</Typography.Text>
-                </> : null}
+                </> : null} */}
             </Summary>
         </InfoWrapper>
     </WindowFrame>;
@@ -421,9 +421,9 @@ export const Main = () => {
     return (
         <WindowContext.Context.Provider value={windowState}>
             <Container>
-                <Activities />
-                <Careers />
                 <Profile />
+                <Careers />
+                <Activities />
             </Container>
         </WindowContext.Context.Provider>
     );
