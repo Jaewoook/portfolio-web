@@ -112,6 +112,15 @@ const StatusBar: React.FC<StatusBarProps> = ({ children, onCloseClick }) => {
     );
 };
 
+const DraggableArea = styled.div.attrs({ className: "window-frame-draggable-area" })`
+    width: 100%;
+    height: 24px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+`;
+
 export const InfoWrapper = styled.div<FlexDirectionProps & AlignItemsProps & JustifyContentProps & PaddingProps>`
     width: 100%;
     height: 100%;
@@ -160,11 +169,12 @@ export const WindowFrame: React.FC<Props> = (props) => {
         setZIndex(newZIndex);
     }, [windowContext.windows, title, setZIndex]);
     return show ? (
-        <Draggable onMouseDown={handleActive}>
+        <Draggable handle=".window-frame-draggable-area" onMouseDown={handleActive}>
             <Container {...styles} zIndex={zIndex}>
                 {!hideStatusBar ? <StatusBar onCloseClick={() => setShow(false)}>
                     {title}
                 </StatusBar> : null}
+                <DraggableArea />
                 <Wrapper>
                     {children}
                 </Wrapper>
