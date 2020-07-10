@@ -12,7 +12,7 @@ const USERNAME = "Jaewook Ahn";
 
 const Container = styled.div`
     width: 100%;
-    height: 100%;
+    height: calc(100vh - 78px);
     display: flex;
     flex-direction: column;
     align-items: center;
