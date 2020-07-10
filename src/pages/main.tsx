@@ -120,7 +120,7 @@ const Activities: React.FC = () => {
         })();
     }, []);
 
-    return <WindowFrame height="450px" left="30px" top="10%" title="Activities">
+    return <WindowFrame width={["350px", "300px"]} height="350px" left="18.5%" top={null} bottom="13.3%" title="Activities">
         <InfoWrapper paddingTop={0} flexDirection="column">
             <Tabs size="small" defaultActiveKey="repositories">
                 <Tabs.TabPane tab="Repositories" key="repositories">
@@ -140,17 +140,100 @@ const Activities: React.FC = () => {
 };
 
 const Careers: React.FC = () => {
-    return <WindowFrame width={["100%", "350px"]} title="Careers">
-        <InfoWrapper>
+    return <WindowFrame width={["350px", "460px"]} height={["auto", "580px"]} left="51%" top="27%" title="Careers">
+        <InfoWrapper flexDirection="column" alignItems="flex-start">
+            <Typography.Title level={2}>Careers</Typography.Title>
+            <Typography.Title level={4}>Salesboost</Typography.Title>
+            <Typography.Text>2019.01 ~ 2020.02</Typography.Text>
+            <Typography.Text>on Frontend</Typography.Text>
+            <Typography.Text>
+                <ul>
+                    <li>Developed Salesboost service web using React
+                        <ul>
+                            <li>auth service</li>
+                            <li>catalog service</li>
+                            <li>video creation service</li>
+                            <li>ad service</li>
+                        </ul>
+                    </li>
+                    <li>Developed Open Source UI Library "malta" based on React</li>
+                    <li>Developed completed component pack "palmbeach" based on React</li>
+                    <li>Developed user feedback component SDK based on React</li>
+                </ul>
+            </Typography.Text>
+            <Typography.Text>on Backend</Typography.Text>
+            <Typography.Text>
+                <ul>
+                    <li>Developed user feedback collect system using GraphQL</li>
+                </ul>
+            </Typography.Text>
+            <br />
+            <Typography.Title level={4}>PlusTV</Typography.Title>
+            <Typography.Text>2018.02 ~ 2018.10</Typography.Text>
+            <Typography.Text>on Frontend</Typography.Text>
+            <Typography.Text>
+                <ul>
+                    <li>Developed WebOS signage player app (Installed at 투썸플레이스)
+                        <ul>
+                            <li>image / video / web template content player</li>
+                            <li>scheduled content playback using cron expression</li>
+                            <li>multi display synchronized content playback using control server and WebSocket</li>
+                            <li>support WebOS 2.x / 3.x platforms</li>
+                            <li>remote device control & monitoring</li>
+                        </ul>
+                    </li>
+                    <li>Developed 뚜레쥬르 빵알림 backoffice using Vue.js</li>
+                    <li>Developed 뚜레쥬르 Menuboard Coffee & Beverage menu template using Vue.js</li>
+                    <li>Developed 뚜레쥬르 빵알림 template using Vue.js</li>
+                    <li>Developed VSS AUTO reservation web using Backbone.js</li>
+                </ul>
+            </Typography.Text>
+            <Typography.Text>on Backend</Typography.Text>
+            <Typography.Text>
+                <ul>
+                    <li>Developed VSS AUTO reservation backend using Flask</li>
+                </ul>
+            </Typography.Text>
+            <Typography.Title level={4}>AtlasGuide</Typography.Title>
+            <Typography.Text>2017.06 ~ 2017.09 Kookmin Univ. Summer Internship</Typography.Text>
+            <Typography.Text>
+                <ul>
+                    <li>Developed pcm voice recorder app</li>
+                    <li>Developed voice recorder app API backend</li>
+                </ul>
+            </Typography.Text>
+        </InfoWrapper>
+    </WindowFrame>;
+};
 
+const Profile: React.FC = () => {
+    const [showContact, setSHowContact] = React.useState(false);
+    return <WindowFrame width={["350px", "550px"]} height="auto" maxHeight={showContact ? "274px" : "214px"} left="9.7%" top="7%" title="Basic Info" hideStatusBar>
+        <InfoWrapper flexDirection={["column", "row"]}>
+            <Summary alignItems="center">
+                <Typography.Title><span>👨‍💻</span></Typography.Title>
+                <Typography.Title level={2}>Jaewook Ahn</Typography.Title>
+                <Typography.Text>Web Frontend developer</Typography.Text>
+            </Summary>
+            <Summary marginLeft="32px">
+                <Typography.Text aria-label="main skillset">❤️ TypeScript, React, Serverless</Typography.Text>
+                <Typography.Text aria-label="location">📍 Seoul, South Korea</Typography.Text>
+                <Typography.Text aria-label="university">🎓 Kookmin University</Typography.Text>
+                <Typography.Text aria-label="test">🤩 Running, Photograph, Beer</Typography.Text>
+                <Typography.Link onClick={() => setSHowContact(!showContact)} aria-label="contact">🤝 Contact</Typography.Link>
+                {showContact ? <>
+                    <Typography.Text>📞 +82-10-5438-7623</Typography.Text>
+                    <Typography.Text>✈️ ajw4586@gmail.com</Typography.Text>
+                </> : null}
+            </Summary>
         </InfoWrapper>
     </WindowFrame>;
 };
 
 const WINDOW_KEYS = [
-    "Basic Info",
     "Activities",
     "Careers",
+    "Basic Info",
 ];
 
 export const Main = () => {
@@ -198,21 +281,7 @@ export const Main = () => {
             <Container>
                 <Activities />
                 <Careers />
-                <WindowFrame width={["350px", "500px"]} height="auto" left="calc(50% - 250px)" top="calc(50% - 100px)" title="Basic Info" hideStatusBar>
-                    <InfoWrapper flexDirection={["column", "row"]}>
-                        <Summary alignItems="center">
-                            <Typography.Title><span>👨‍💻</span></Typography.Title>
-                            <Typography.Title level={2}>Jaewook Ahn</Typography.Title>
-                            <Typography.Text>Web Front-end developer</Typography.Text>
-                        </Summary>
-                        <Summary marginLeft="32px">
-                            <Typography.Text aria-label="main skillset">❤️ TypeScript, React, Serverless</Typography.Text>
-                            <Typography.Text aria-label="location">📍 Seoul, South Korea</Typography.Text>
-                            <Typography.Text aria-label="university">🎓 Kookmin University</Typography.Text>
-                            <Typography.Text aria-label="test">🤩 Running, Photograph, Beer</Typography.Text>
-                        </Summary>
-                    </InfoWrapper>
-                </WindowFrame>
+                <Profile />
             </Container>
         </WindowContext.Context.Provider>
     );
