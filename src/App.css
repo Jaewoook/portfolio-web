@@ -5,3 +5,11 @@ button.ant-tabs-tab {
 .ant-typography ul li, .ant-typography ol li {
     font-weight: 300;
 }
+
+.ant-tabs {
+    height: 100%;
+}
+
+.ant-tabs-content {
+    height: 100%;
+}

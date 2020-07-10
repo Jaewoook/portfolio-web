@@ -22,6 +22,7 @@ const Container = styled.div<DisplayProps>`
     flex-direction: column;
     align-items: center;
     position: relative;
+    overflow: hidden;
 `;
 
 Container.defaultProps = {
@@ -85,6 +86,16 @@ const GitHubRepoWrapper = styled.div`
     }
 `;
 
+const TabContentWrapper = styled.div`
+    display: flex;
+    width: 100%;
+    height: 100%;
+    overflow-y: scroll;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+`;
+
 const GitHubRepo: React.FC<Repository> = (props) => {
     return (
         <GitHubRepoWrapper onClick={() => window.open(props.url)}>
@@ -124,11 +135,13 @@ const Activities: React.FC = () => {
         <InfoWrapper paddingTop={0} flexDirection="column">
             <Tabs size="small" defaultActiveKey="repositories">
                 <Tabs.TabPane tab="Repositories" key="repositories">
-                    {loading ? (
-                        <Spin indicator={<LoadingOutlined spin />} />
-                    ) : repositories.length ? repositories.map((repo, i) => (
-                        <GitHubRepo key={i} {...repo} />
-                    )) : <Typography.Text>No repository</Typography.Text>}
+                    <TabContentWrapper>
+                        {loading ? (
+                            <Spin indicator={<LoadingOutlined spin />} />
+                        ) : repositories.length ? repositories.map((repo, i) => (
+                            <GitHubRepo key={i} {...repo} />
+                        )) : <Typography.Text>No repository</Typography.Text>}
+                    </TabContentWrapper>
                 </Tabs.TabPane>
                 <Tabs.TabPane tab="Projects & Activities">
 
