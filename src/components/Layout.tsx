@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components/macro";
+import { height, HeightProps, margin, MarginProps } from "styled-system";
 import { Layout as LayoutWrapper } from "antd";
 import { Header } from "./Header";
 import { HeaderContext } from "../contexts";
@@ -14,7 +15,7 @@ interface ColorModeProps {
 
 const ThemeWrapper = styled.div<ColorModeProps>`
     width: 100vw;
-    height: 100vh;
+    min-height: 100vh;
     background-color: ${({ colorMode }) => colorMode === "dark" ? "#000" : "#fff"};
 `;
 
@@ -25,14 +26,20 @@ return <ThemeWrapper colorMode={colorMode}>{children}</ThemeWrapper>
 
 const Container = styled(LayoutWrapper)<ColorModeProps>`
     width: 100vw;
-    height: 100vh;
+    min-height: 100vh;
     background-color: rgba(255, 255, 255, 0.04);
 `;
 
-const Wrapper = styled.div`
+const Wrapper = styled.div<HeightProps & MarginProps>`
     width: 100%;
-    height: 100%;
+    ${height}
+    ${margin}
 `;
+
+Wrapper.defaultProps = {
+    height: ["auto", "100vh"],
+    mt: [64 + 14, 0],
+};
 
 export const Layout: React.FC<Props> = ({ children }) => {
     const { show } = React.useContext(HeaderContext);

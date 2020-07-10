@@ -3,13 +3,17 @@ import styled, { keyframes } from "styled-components/macro";
 import {
     width, WidthProps,
     height, HeightProps,
+    maxHeight, MaxHeightProps,
     top, TopProps,
     right, RightProps,
     bottom, BottomProps,
     left, LeftProps,
     position, PositionProps,
     flexDirection, FlexDirectionProps,
+    alignItems, AlignItemsProps,
+    justifyContent, JustifyContentProps,
     padding, PaddingProps,
+    margin, MarginProps,
     zIndex,
 } from "styled-system";
 import { Typography } from "antd";
@@ -27,21 +31,26 @@ const zoomIn = keyframes`
     }
 `;
 
-type ContainerProps = WidthProps & HeightProps & PositionProps & TopProps & RightProps & BottomProps & LeftProps;
+type ContainerProps = WidthProps & HeightProps & MaxHeightProps
+                    & MarginProps & PositionProps
+                    & TopProps & RightProps & BottomProps & LeftProps;
 
 const Container = styled.div<ContainerProps>`
     ${width}
     ${height}
+    ${maxHeight}
     ${position}
     ${top}
     ${right}
     ${bottom}
     ${left}
     ${zIndex}
+    ${margin}
     background-color: #333;
     animation: ${zoomIn} 0.15s ease-in-out;
     border-radius: 4px;
     box-shadow: rgba(0, 0, 0, 0.55) 0px 20px 68px;
+    transition: max-height 0.15s ease-in-out;
 `;
 
 const Wrapper = styled.div`
@@ -62,6 +71,7 @@ const StatusBarWrapper = styled.div`
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    background-color: inherit;
     > span {
         color: white;
         font-size: 12px;
@@ -102,15 +112,19 @@ const StatusBar: React.FC<StatusBarProps> = ({ children, onCloseClick }) => {
     );
 };
 
-export const InfoWrapper = styled.div<FlexDirectionProps & PaddingProps>`
+export const InfoWrapper = styled.div<FlexDirectionProps & AlignItemsProps & JustifyContentProps & PaddingProps>`
     width: 100%;
     height: 100%;
     display: flex;
     ${flexDirection}
-    align-items: center;
+    ${alignItems}
+    ${justifyContent}
     ${padding}
     .ant-typography {
         color: white;
+    }
+    a.ant-typography {
+        color: #1890ff;
     }
     h2 {
         margin: 0 !important;
@@ -118,6 +132,7 @@ export const InfoWrapper = styled.div<FlexDirectionProps & PaddingProps>`
 `;
 
 InfoWrapper.defaultProps = {
+    alignItems: "center",
     paddingTop: "24px",
     paddingRight: "18px",
     paddingBottom: "24px",
@@ -164,4 +179,5 @@ WindowFrame.defaultProps = {
     top: "20%",
     left: "10%",
     position: ["static", "absolute"],
-}
+    my: ["18px", 0],
+};
