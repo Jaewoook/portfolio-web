@@ -1,5 +1,5 @@
 import React from "react";
-import styled, { keyframes } from "styled-components/macro";
+import styled, { css, keyframes } from "styled-components/macro";
 import {
     width, WidthProps,
     height, HeightProps,
@@ -53,11 +53,32 @@ const Container = styled.div<ContainerProps>`
     transition: max-height 0.15s ease-in-out;
 `;
 
+export const scrollbarStyle = css`
+    ::-webkit-scrollbar {
+        width: 8px;
+        background: none;
+    }
+	::-webkit-scrollbar-thumb {
+	    background-color: rgba(0, 0, 0, 0.2);
+        background-clip: padding-box;
+        border: 2px solid transparent;
+        border-radius: 4px;
+	}
+	::-webkit-scrollbar-track {
+	    background: none;
+	}
+`;
+
 const Wrapper = styled.div`
     width: 100%;
     height: 100%;
-    overflow: scroll;
+    overflow-y: scroll;
+    ::-webkit-scrollbar {
+        width: 8px;
+        background: none;
+    }
     padding-top: 24px;
+    ${scrollbarStyle}
 `;
 
 const StatusBarWrapper = styled.div`

@@ -10,6 +10,7 @@ import { Spin, Tabs, Typography } from "antd";
 import { GithubFilled, LoadingOutlined } from "@ant-design/icons";
 
 import { WindowFrame, InfoWrapper } from "../components";
+import { scrollbarStyle } from "../components/WindowFrame";
 import { HeaderContext, WindowContext } from "../contexts";
 import { getPinnedRepositories } from "../apis/GetPinnedRepositories";
 import { Repository } from "../models/Repository";
@@ -93,6 +94,7 @@ const TabContentWrapper = styled.div<AlignItemsProps>`
     overflow-y: scroll;
     flex-direction: column;
     ${alignItems}
+    ${scrollbarStyle}
 `;
 
 TabContentWrapper.defaultProps = {
