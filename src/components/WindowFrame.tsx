@@ -81,7 +81,7 @@ const Wrapper = styled.div`
     ${scrollbarStyle}
 `;
 
-const StatusBarWrapper = styled.div`
+const StatusBarWrapper = styled.div.attrs({ className: "window-frame-draggable-area" })`
     width: 100%;
     height: 24px;
     position: fixed;
@@ -194,8 +194,7 @@ export const WindowFrame: React.FC<Props> = (props) => {
             <Container {...styles} zIndex={zIndex}>
                 {!hideStatusBar ? <StatusBar onCloseClick={() => setShow(false)}>
                     {title}
-                </StatusBar> : null}
-                <DraggableArea />
+                </StatusBar> : <DraggableArea />}
                 <Wrapper>
                     {children}
                 </Wrapper>
