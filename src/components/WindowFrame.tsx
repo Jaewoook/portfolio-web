@@ -81,6 +81,10 @@ const Wrapper = styled.div`
     ${scrollbarStyle}
 `;
 
+interface ActiveProps {
+    active: boolean;
+}
+
 const StatusBarWrapper = styled.div.attrs({ className: "window-frame-draggable-area" })`
     width: 100%;
     height: 24px;
