@@ -17,12 +17,12 @@
     </head>
     <body>
         <div id="root"></div>
-        <script>
+        <script type="text/javascript">
             window.__ENV__ = {
                 NODE_ENV: "%REACT_APP_ENV%",
             }
         </script>
-        <script>
+        <script type="text/javascript">
             if ("%REACT_APP_ENV%" == "production") {
                 var analytics = document.createElement("script");
                 analytics.type = "text/javascript";
