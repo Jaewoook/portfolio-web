@@ -24,12 +24,12 @@
         </script>
         <script>
             if ("%REACT_APP_ENV%" == "production") {
-                var gtag = document.createElement("script");
-                gtag.type = "text/javascript";
-                gtag.src = "https://www.googletagmanager.com/gtag/js?id=G-8SNMEHDQJ0";
-                gtag.async = 1;
+                var analytics = document.createElement("script");
+                analytics.type = "text/javascript";
+                analytics.src = "https://www.googletagmanager.com/gtag/js?id=G-8SNMEHDQJ0";
+                analytics.async = 1;
                 var scripts = document.getElementsByTagName("script")[0];
-                scripts.parentNode.insertBefore(gtag, scripts);
+                scripts.parentNode.insertBefore(analytics, scripts);
                 window.dataLayer = window.dataLayer || [];
                   function gtag(){dataLayer.push(arguments);}
                   gtag('js', new Date());
