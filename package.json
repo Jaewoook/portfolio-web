@@ -24,7 +24,7 @@
   "dependencies": {
     "@ant-design/icons": "^4.2.2",
     "antd": "^4.3.5",
-    "axios": "^0.21.0",
+    "axios": "^0.21.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-draggable": "^4.4.3",
