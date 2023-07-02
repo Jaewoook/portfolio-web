@@ -1,6 +1,13 @@
-import "antd/dist/antd.css";
-import "./App.css";
+/**
+ * External modules
+ */
 import React from "react";
+import "antd/dist/antd.min.css";
+
+/**
+ * Internal modules
+ */
+import "./App.css";
 import { Layout } from "./components";
 import { Hero, Main } from "./pages";
 import { HeaderContext } from "./contexts";

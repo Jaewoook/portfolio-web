@@ -1,8 +1,15 @@
+/**
+ * External modules
+ */
 import React from "react";
 import styled, { keyframes } from "styled-components/macro";
 import { space, SpaceProps, justifySelf, JustifySelfProps } from "styled-system";
 import { Avatar, Button, Typography } from "antd";
-import { RightCircleOutlined, FacebookOutlined, GithubOutlined, HighlightOutlined } from "@ant-design/icons";
+import { AiOutlineRightCircle, AiOutlineFacebook, AiOutlineGithub, AiOutlineHighlight } from "react-icons/ai";
+
+/**
+ * Internal modules
+ */
 import { HeaderContext } from "../contexts";
 import * as images from "../assets/images";
 import * as urls from "../assets/urls";
@@ -48,7 +55,7 @@ const TextBlock = styled.div`
     }
 `;
 
-const EnterButton = styled(RightCircleOutlined)`
+const EnterButton = styled(AiOutlineRightCircle)`
     margin-top: 32px;
     color: #fff;
     font-size: 24px;
@@ -139,7 +146,6 @@ export const Hero: React.FC<Props> = (props) => {
                 setTimeout(() => setUser(`${USERNAME}_`), 400);
             }
         }
-    //  eslint-disable-next-line react-hooks/exhaustive-deps
     }, [user]);
 
     React.useEffect(() => {
@@ -162,15 +168,15 @@ export const Hero: React.FC<Props> = (props) => {
             <Section>
                 <OptionContainer>
                     <OptionButton onClick={() => window.open(urls.github)}>
-                        <Button ghost shape="circle-outline" icon={<GithubOutlined />} />
+                        <Button ghost shape="circle" icon={<AiOutlineGithub />} />
                         <Typography.Text>GITHUB</Typography.Text>
                     </OptionButton>
                     <OptionButton onClick={() => window.open(urls.facebook)}>
-                        <Button ghost shape="circle-outline" icon={<FacebookOutlined />} />
+                        <Button ghost shape="circle" icon={<AiOutlineFacebook />} />
                         <Typography.Text>FACEBOOK</Typography.Text>
                     </OptionButton>
                     <OptionButton onClick={() => window.open(urls.blog)}>
-                        <Button ghost shape="circle-outline" icon={<HighlightOutlined />} />
+                        <Button ghost shape="circle" icon={<AiOutlineHighlight />} />
                         <Typography.Text>BLOG</Typography.Text>
                     </OptionButton>
                 </OptionContainer>

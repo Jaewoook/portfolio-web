@@ -1,23 +1,43 @@
+/**
+ * External modules
+ */
 import React from "react";
-import styled, { css, keyframes } from "styled-components/macro";
+import styled, { css, keyframes } from "styled-components";
 import {
-    width, WidthProps,
-    height, HeightProps,
-    maxHeight, MaxHeightProps,
-    top, TopProps,
-    right, RightProps,
-    bottom, BottomProps,
-    left, LeftProps,
-    position, PositionProps,
-    flexDirection, FlexDirectionProps,
-    alignItems, AlignItemsProps,
-    justifyContent, JustifyContentProps,
-    padding, PaddingProps,
-    margin, MarginProps,
+    width,
+    WidthProps,
+    height,
+    HeightProps,
+    maxHeight,
+    MaxHeightProps,
+    top,
+    TopProps,
+    right,
+    RightProps,
+    bottom,
+    BottomProps,
+    left,
+    LeftProps,
+    position,
+    PositionProps,
+    flexDirection,
+    FlexDirectionProps,
+    alignItems,
+    AlignItemsProps,
+    justifyContent,
+    JustifyContentProps,
+    padding,
+    PaddingProps,
+    margin,
+    MarginProps,
     zIndex,
 } from "styled-system";
 import { Typography } from "antd";
 import Draggable from "react-draggable";
+
+/**
+ * Internal modules
+ */
 import { WindowContext } from "../contexts";
 
 const zoomIn = keyframes`
@@ -31,9 +51,15 @@ const zoomIn = keyframes`
     }
 `;
 
-type ContainerProps = WidthProps & HeightProps & MaxHeightProps
-                    & MarginProps & PositionProps
-                    & TopProps & RightProps & BottomProps & LeftProps;
+type ContainerProps = WidthProps &
+    HeightProps &
+    MaxHeightProps &
+    MarginProps &
+    PositionProps &
+    TopProps &
+    RightProps &
+    BottomProps &
+    LeftProps;
 
 const Container = styled.div<ContainerProps>`
     ${width}
@@ -58,15 +84,15 @@ export const scrollbarStyle = css`
         width: 8px;
         background: none;
     }
-	::-webkit-scrollbar-thumb {
-	    background-color: rgba(0, 0, 0, 0.2);
+    ::-webkit-scrollbar-thumb {
+        background-color: rgba(0, 0, 0, 0.2);
         background-clip: padding-box;
         border: 2px solid transparent;
         border-radius: 4px;
-	}
-	::-webkit-scrollbar-track {
-	    background: none;
-	}
+    }
+    ::-webkit-scrollbar-track {
+        background: none;
+    }
 `;
 
 const Wrapper = styled.div`
@@ -85,7 +111,9 @@ interface ActiveProps {
     active: boolean;
 }
 
-const StatusBarWrapper = styled.div.attrs({ className: "window-frame-draggable-area" })`
+const StatusBarWrapper = styled.div.attrs({
+    className: "window-frame-draggable-area",
+})`
     width: 100%;
     height: 24px;
     position: fixed;
@@ -132,12 +160,14 @@ const StatusBar: React.FC<StatusBarProps> = ({ children, onCloseClick }) => {
             <div className="statusbar close" onClick={onCloseClick}></div>
             <div className="statusbar min"></div>
             <div className="statusbar max"></div>
-            <Typography.Text >{children}</Typography.Text>
+            <Typography.Text>{children}</Typography.Text>
         </StatusBarWrapper>
     );
 };
 
-const DraggableArea = styled.div.attrs({ className: "window-frame-draggable-area" })`
+const DraggableArea = styled.div.attrs({
+    className: "window-frame-draggable-area",
+})`
     width: 100%;
     height: 24px;
     position: fixed;
@@ -146,7 +176,9 @@ const DraggableArea = styled.div.attrs({ className: "window-frame-draggable-area
     right: 0;
 `;
 
-export const InfoWrapper = styled.div<FlexDirectionProps & AlignItemsProps & JustifyContentProps & PaddingProps>`
+export const InfoWrapper = styled.div<
+    FlexDirectionProps & AlignItemsProps & JustifyContentProps & PaddingProps
+>`
     width: 100%;
     height: 100%;
     display: flex;
@@ -193,18 +225,28 @@ export const WindowFrame: React.FC<Props> = (props) => {
         const newZIndex = windowContext.windows.indexOf(title ?? "");
         setZIndex(newZIndex);
     }, [windowContext.windows, title, setZIndex]);
-    return show ? (
-        <Draggable handle=".window-frame-draggable-area" onMouseDown={handleActive}>
-            <Container {...styles} zIndex={zIndex}>
-                {!hideStatusBar ? <StatusBar onCloseClick={() => setShow(false)}>
+
+    if (!show) {
+        return null;
+    }
+
+    return (
+        // <Draggable
+        //     handle=".window-frame-draggable-area"
+        //     onMouseDown={handleActive}
+        // >
+        <Container {...styles} zIndex={zIndex}>
+            {!hideStatusBar ? (
+                <StatusBar onCloseClick={() => setShow(false)}>
                     {title}
-                </StatusBar> : <DraggableArea />}
-                <Wrapper>
-                    {children}
-                </Wrapper>
-            </Container>
-        </Draggable>
-    ) : null;
+                </StatusBar>
+            ) : (
+                <DraggableArea />
+            )}
+            <Wrapper>{children}</Wrapper>
+        </Container>
+        // </Draggable>
+    );
 };
 
 WindowFrame.defaultProps = {
