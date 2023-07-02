@@ -154,7 +154,10 @@ interface StatusBarProps {
     onCloseClick: () => void;
 }
 
-const StatusBar: React.FC<StatusBarProps> = ({ children, onCloseClick }) => {
+const StatusBar = ({
+    children,
+    onCloseClick,
+}: React.PropsWithChildren<StatusBarProps>) => {
     return (
         <StatusBarWrapper>
             <div className="statusbar close" onClick={onCloseClick}></div>
@@ -211,8 +214,19 @@ type Props = ContainerProps & {
     children?: React.ReactNode;
 };
 
-export const WindowFrame: React.FC<Props> = (props) => {
-    const { title, hideStatusBar, children, ...styles } = props;
+export const WindowFrame = (props: React.PropsWithChildren<Props>) => {
+    const {
+        title,
+        hideStatusBar,
+        children,
+        width = 300,
+        height = 500,
+        top = "20%",
+        left = "10%",
+        position = ["static", "absolute"],
+        my = ["18px", 0],
+        ...styles
+    } = props;
     const windowContext = React.useContext(WindowContext.Context);
     const [show, setShow] = React.useState(true);
     const [zIndex, setZIndex] = React.useState(0);
@@ -235,7 +249,7 @@ export const WindowFrame: React.FC<Props> = (props) => {
         //     handle=".window-frame-draggable-area"
         //     onMouseDown={handleActive}
         // >
-        <Container {...styles} zIndex={zIndex}>
+        <Container width={width} height={height} top={top} left={left} position={position} my={my} {...styles} zIndex={zIndex}>
             {!hideStatusBar ? (
                 <StatusBar onCloseClick={() => setShow(false)}>
                     {title}
@@ -247,13 +261,4 @@ export const WindowFrame: React.FC<Props> = (props) => {
         </Container>
         // </Draggable>
     );
-};
-
-WindowFrame.defaultProps = {
-    width: 300,
-    height: 500,
-    top: "20%",
-    left: "10%",
-    position: ["static", "absolute"],
-    my: ["18px", 0],
 };

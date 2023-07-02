@@ -1,8 +1,9 @@
+"use client";
 /**
  * External modules
  */
 import React from "react";
-import styled, { keyframes } from "styled-components/macro";
+import styled, { keyframes } from "styled-components";
 import { space, SpaceProps, justifySelf, JustifySelfProps } from "styled-system";
 import { Avatar, Button, Typography } from "antd";
 import { AiOutlineRightCircle, AiOutlineFacebook, AiOutlineGithub, AiOutlineHighlight } from "react-icons/ai";
@@ -10,7 +11,6 @@ import { AiOutlineRightCircle, AiOutlineFacebook, AiOutlineGithub, AiOutlineHigh
 /**
  * Internal modules
  */
-import { HeaderContext } from "../contexts";
 import * as images from "../assets/images";
 import * as urls from "../assets/urls";
 // import { log } from "../utils";
@@ -111,7 +111,7 @@ const BadgeWrapper = styled.div`
     }
 `;
 
-const Badge: React.FC = (props) => (
+const Badge = (props: React.PropsWithChildren) => (
     <BadgeWrapper>
         <Typography.Text>{props.children}</Typography.Text>
     </BadgeWrapper>
@@ -121,9 +121,8 @@ interface Props {
     onEnter: () => void;
 }
 
-export const Hero: React.FC<Props> = (props) => {
+const Login = (props: Props) => {
     const { onEnter } = props;
-    const headerContext = React.useContext(HeaderContext);
     const [user, setUser] = React.useState("")
     const [typeIndex, setTypeIndex] = React.useState(0);
 
@@ -147,13 +146,6 @@ export const Hero: React.FC<Props> = (props) => {
             }
         }
     }, [user]);
-
-    React.useEffect(() => {
-        headerContext.setShow(false);
-        return () => {
-            headerContext.setShow(true);
-        };
-    });
 
     return (
         <Container>
@@ -184,3 +176,5 @@ export const Hero: React.FC<Props> = (props) => {
         </Container>
     );
 };
+
+export default Login;

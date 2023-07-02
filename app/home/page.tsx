@@ -1,8 +1,10 @@
+"use client";
+
 /**
  * External modules
  */
 import React from "react";
-import styled from "styled-components/macro";
+import styled from "styled-components";
 import {
     alignItems,
     AlignItemsProps,
@@ -17,12 +19,12 @@ import { GithubFilled, LoadingOutlined } from "@ant-design/icons";
 /**
  * Internal modules
  */
-import { WindowFrame, InfoWrapper } from "../components";
-import { scrollbarStyle } from "../components/WindowFrame";
-import { HeaderContext, WindowContext } from "../contexts";
-import { getPinnedRepositories } from "../apis/GetPinnedRepositories";
-import { Repository } from "../models/Repository";
-import { log } from "../utils";
+import { getPinnedRepositories } from "../../apis/GetPinnedRepositories";
+import { WindowContext } from "../../contexts";
+import { WindowFrame, InfoWrapper } from "../../components";
+import { scrollbarStyle } from "../../components/WindowFrame";
+import { Repository } from "../../models/Repository";
+import { log } from "../../utils";
 
 const Container = styled.div<DisplayProps>`
     width: 100%;
@@ -451,11 +453,11 @@ const Careers: React.FC = () => {
                             </ul>
                         </li>
                         <li>
-                            Developed Open Source UI Library "malta" based on
+                            Developed Open Source UI Library &ldquo;malta&rdquo; based on
                             React
                         </li>
                         <li>
-                            Developed completed component pack "palmbeach" based
+                            Developed completed component pack &ldquo;palmbeach&rdquo; based
                             on React
                         </li>
                         <li>
@@ -577,8 +579,7 @@ const Profile: React.FC = () => {
 
 const WINDOW_KEYS = ["Activities", "Careers", "Basic Info"];
 
-export const Main = () => {
-    const headerContext = React.useContext(HeaderContext);
+const Main = () => {
     const [windowState, setWindowState] = React.useState<WindowContext>(
         WindowContext.defaultValue
     );
@@ -616,12 +617,6 @@ export const Main = () => {
         }
     }, [windowState.windows]);
 
-    React.useEffect(() => {
-        if (!headerContext.show) {
-            headerContext.setShow(true);
-        }
-    }, [headerContext]);
-
     return (
         <WindowContext.Context.Provider value={windowState}>
             <Container>
@@ -632,3 +627,5 @@ export const Main = () => {
         </WindowContext.Context.Provider>
     );
 };
+
+export default Main;
