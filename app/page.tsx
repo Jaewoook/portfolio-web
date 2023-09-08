@@ -3,6 +3,7 @@
  * External modules
  */
 import React from "react";
+import { useRouter } from "next/navigation";
 import styled, { keyframes } from "styled-components";
 import { space, SpaceProps, justifySelf, JustifySelfProps } from "styled-system";
 import { Avatar, Button, Typography } from "antd";
@@ -13,9 +14,6 @@ import { AiOutlineRightCircle, AiOutlineFacebook, AiOutlineGithub, AiOutlineHigh
  */
 import * as images from "../assets/images";
 import * as urls from "../assets/urls";
-// import { log } from "../utils";
-
-const USERNAME = "Jaewook Ahn";
 
 const Container = styled.div`
     width: 100%;
@@ -25,7 +23,7 @@ const Container = styled.div`
     align-items: center;
 `;
 
-const Section = styled.div<JustifySelfProps>`
+const Section = styled.section<JustifySelfProps>`
     display: flex;
     flex-direction: inherit;
     align-items: inherit;
@@ -49,9 +47,10 @@ const TextBlock = styled.div`
     width: 275px;
     height: 46px;
     margin-top: 24px;
+    text-align: center;
     > h1 {
         color: #fff;
-        animation: ${fadeIn} 1.5s;
+        animation: ${fadeIn} 0.5s;
     }
 `;
 
@@ -96,64 +95,20 @@ const OptionButton = styled.div`
     }
 `;
 
-const BadgeWrapper = styled.div`
-    margin-top: -4px;
-    padding: 1px 3px;
-    background-color: #ff4d4f;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 1;
-    .ant-typography {
-        color: white;
-        font-size: 10px;
-        line-height: 12px;
-    }
-`;
-
-const Badge = (props: React.PropsWithChildren) => (
-    <BadgeWrapper>
-        <Typography.Text>{props.children}</Typography.Text>
-    </BadgeWrapper>
-);
-
-interface Props {
-    onEnter: () => void;
-}
-
-const Login = (props: Props) => {
-    const { onEnter } = props;
-    const [user, setUser] = React.useState("")
-    const [typeIndex, setTypeIndex] = React.useState(0);
+const Login = () => {
+    const router = useRouter();
+    const [user, setUser] = React.useState("Jaewook Ahn")
 
     const handleEnter = React.useCallback(() => {
-        onEnter();
-    }, [onEnter]);
-
-    React.useEffect(() => {
-        if (typeIndex <= USERNAME.length) {
-            setTimeout(() => {
-                setTypeIndex(typeIndex + 1);
-                setUser(user + USERNAME.charAt(typeIndex));
-            }, 50);
-        }
-
-        if (user.includes(USERNAME)) {
-            if (user.includes("_")) {
-                setTimeout(() => setUser(USERNAME), 400);
-            } else {
-                setTimeout(() => setUser(`${USERNAME}_`), 400);
-            }
-        }
-    }, [user]);
+        router.push("/home")
+    }, [router]);
 
     return (
         <Container>
             <Section style={{ flex: 1, justifyContent: "center" }}>
                 <User size={72} src={images.profile} />
-                <Badge>Alpha</Badge>
                 <TextBlock>
-                    <Typography.Title >{user}</Typography.Title>
+                    <Typography.Title>{user}</Typography.Title>
                 </TextBlock>
                 <EnterButton onClick={handleEnter} />
             </Section>

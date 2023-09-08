@@ -10,6 +10,7 @@ import { Layout as LayoutWrapper } from "antd";
  * Internal modules
  */
 import { Header } from "../components/Header";
+import { StyledComponentsRegistry } from "../libs/styled";
 import "../styles/App.css";
 
 /**
@@ -18,35 +19,35 @@ import "../styles/App.css";
 import type { ReactNode } from "react";
 
 const Container = styled(LayoutWrapper)`
-    width: 100vw;
-    min-height: 100vh;
-    display: flex;
-    background-color: #000;
+  width: 100vw;
+  min-height: 100vh;
+  display: flex;
+  background-color: #000;
 `;
 
 const Wrapper = styled.main`
-    flex: 1;
+  flex: 1;
 `;
 
 interface RootLayoutProps {
-    children: ReactNode;
+  children: ReactNode;
 }
 
 const RootLayout = ({ children }: RootLayoutProps) => {
-    return (
-        <html lang="ko">
-            <head>
-                <title>Jaewook&apos;s Portfolio</title>
-            </head>
-            <body>
-                <Container>
-                    <Wrapper>
-                        {children}
-                    </Wrapper>
-                </Container>
-            </body>
-        </html>
-    );
+  return (
+    <html lang="ko">
+      <head>
+        <title>Jaewook&apos;s Portfolio</title>
+      </head>
+      <body>
+        <StyledComponentsRegistry>
+          <Container>
+            <Wrapper>{children}</Wrapper>
+          </Container>
+        </StyledComponentsRegistry>
+      </body>
+    </html>
+  );
 };
 
 export default RootLayout;
