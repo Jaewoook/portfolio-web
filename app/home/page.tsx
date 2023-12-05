@@ -3,7 +3,7 @@
 /**
  * External modules
  */
-import React from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import styled from "styled-components";
 import {
   alignItems,
@@ -96,6 +96,206 @@ const GitHubRepoWrapper = styled.div`
   }
 `;
 
+interface RepositoryTabProps {
+  loading: boolean;
+  repositories: Repository[];
+}
+
+const RepositoryTab = (props: RepositoryTabProps) => {
+  const { loading, repositories } = props;
+
+  return (
+    <TabContentWrapper>
+      {loading ? (
+        <Spin indicator={<LoadingOutlined spin />} />
+      ) : repositories.length ? (
+        repositories.map((repo, i) => <GitHubRepo key={i} {...repo} />)
+      ) : (
+        <Typography.Text>No repository</Typography.Text>
+      )}
+    </TabContentWrapper>
+  );
+};
+
+const HackathonTab = () => {
+  return (
+    <TabContentWrapper alignItems="flex-start">
+      <Typography.Text>💛 English version comming soon!</Typography.Text>
+      <Typography.Title level={4}>국민대 해커톤 두리톤</Typography.Title>
+      <Typography.Text>
+        <ul>
+          <li>2017.05</li>
+          <li>프로젝트 이름: 겟잇뷰티</li>
+          <li>역할: 안드로이드 앱 개발자</li>
+          <li>
+            결과
+            <ul>
+              <li>해커톤 개발을 리드하여 팀원들과 갈등 관리 및 개발 주도</li>
+              <li>
+                남성인 내가 아닌, 여성의 입장에서 생각을 하며, UI/UX를 제안하고,
+                개발
+              </li>
+              <li>최우수상 수상</li>
+            </ul>
+          </li>
+          <li>
+            추가설명: 광고성 화장품 순위가 아닌 실제 유저들의 데이터에 기반한
+            화장품 순위 추천 서비스를 만들었습니다. 아무 화장품이나 바코드를
+            인식하면 어떤 제품인지 인식할 수 있는 기능을 만들어서 수많은 화장품
+            정보를 직접 입력해야 하는 수고로움을 덜었씁니다. 사용자의 재구매율
+            지표를 활용해 사실에 기반한 순위를 추천하도록 하였습니다.
+          </li>
+        </ul>
+      </Typography.Text>
+      <Typography.Title level={4}>국민대 신입생 해커톤</Typography.Title>
+      <Typography.Text>
+        <ul>
+          <li>2017.02</li>
+          <li>프로젝트 이름: 국민택시</li>
+          <li>역할: 안드로이드 앱 개발자</li>
+          <li>
+            결과
+            <ul>
+              <li>
+                국민대 학생 입장에서의 문제상황 파악과 해결방법을 생각해보는
+                기회
+              </li>
+              <li>
+                국민대 로그인 시스템 취약점을 이용하여 (학교 허가 하에) 리포트를
+                제출하여 개선
+              </li>
+              <li>각자 맡은 부분에 대해 발표를 하며, 청중의 좋은 반응</li>
+              <li>최우수상을 수상</li>
+            </ul>
+          </li>
+          <li>
+            추가설명: 국민대학교까지 택시 카풀 파티를 만들 수 있는 서비스를
+            개발하였습니다. 실제 국민대학교 재학생 선배님들의 의견과 카풀 앱의
+            단점을 보완하여 정확한 신원과 서비스의 신뢰도를 높여 학우들에게 좋은
+            반응을 이끌어낼 수 있었습니다. 해커톤 종료 후 실제 서비스로
+            발전시키려 했으나, 서비스화까지 진행하지 못해 아쉬움이 남는 프로젝트
+            입니다.
+          </li>
+        </ul>
+      </Typography.Text>
+      <Typography.Title level={4}>단국대 한글날 해커톤 집현톤</Typography.Title>
+      <Typography.Text>
+        <ul>
+          <li>2015.10</li>
+          <li>프로젝트 이름: Hey Bill</li>
+          <li>역할: 안드로이드 앱 개발자</li>
+          <li>
+            결과
+            <ul>
+              <li>현업 개발자, 디자이너, 기획자 분들과의 첫 협업의 기회.</li>
+              <li>
+                해커톤에서 거의 모든 기능을 구현한 가장 노력했던 해커톤 중 하나
+              </li>
+              <li>결과가 아닌 과정에 행복함을 느끼고 만족스러웠던 해커톤</li>
+            </ul>
+          </li>
+          <li>
+            추가설명: 기획자 2명, 개발자 2명, 디자이너 2명으로 구성되었던
+            해커톤이었습니다. 카카오에서 서버 개발자로 일하시던 분이 프로젝트를
+            리드하셨는데 현업에 종사하시는 분들과 팀을 이뤄 진행한 첫
+            해커톤이어서 프로젝트 완성도가 상당히 높았습니다. 아쉽게도 다른
+            팀들에 밀려 수상은 하지 못하였지만 무박 3일간 노력하며 과정에 대한
+            만족도가 제일 높은 해커톤중에 하나였습니다. OCR을 이용해 영수증을
+            촬영하면 자동으로 사용 내역을 입력해주는 앱을 만들었습니다.
+          </li>
+        </ul>
+      </Typography.Text>
+    </TabContentWrapper>
+  );
+};
+
+const ExtraCurricularTab = () => {
+  return (
+    <TabContentWrapper alignItems="flex-start">
+      <Typography.Text>💛 English version comming soon!</Typography.Text>
+      <Typography.Title level={4}>베트남 봉사활동</Typography.Title>
+      <Typography.Text>
+        <ul>
+          <li>2017.07.03 ~ 2017.07.14</li>
+          <li>활동: 노력봉사 및 현지 중등 교사 대상 코딩교육</li>
+          <li>
+            결과
+            <ul>
+              <li>
+                현지 중등 교사 대상으로 엔트리와 코드이노를 활용한 커리큘럼 교육
+              </li>
+              <li>
+                10일간의 수업 커리큘럼을 직접 만들어 교육하며, 실제 선생님들의
+                긍정적인 피드백
+              </li>
+              <li>
+                교육 시설, 환경 등을 정비하고, 청소, 페인트칠, 문화교류 등 활동
+              </li>
+            </ul>
+          </li>
+          <li>
+            추가설명: 국민대학교에서 진행한 해외 봉사활동에 참여할 수 있는
+            소중한 기회를 얻게 되어, 소프트웨어 교육과 노력봉사를
+            진행하였습니다. 의사소통이 원활하지 않아, 현지 선생님들과 어떻게
+            하면 효과적으로 수업 내용을 전달할 수 있을지에 대해 깊은 고민을 하며
+            수업 커리큘럼을 구성할 수 있었던 소중한 시간이었습니다.
+          </li>
+        </ul>
+      </Typography.Text>
+      <Typography.Title level={4}>Software Maestro 7기</Typography.Title>
+      <Typography.Text>
+        <ul>
+          <li>2016.07 ~ 2017.06</li>
+          <li>1단계 및 2단계 연수생으로 활동</li>
+          <li>
+            1단계 프로젝트 - Golfit
+            <ul>
+              <li>발 압력 측정 및 교정 프로젝트</li>
+              <li>안드로이드 앱 개발</li>
+              <li>
+                결과
+                <ul>
+                  <li>
+                    임베디드 개발에 대해 간단하게나마 공부할 수 있었던
+                    프로젝트입니다.
+                  </li>
+                  <li>
+                    임베디드 기기와 블루투스 LE를 이용하여 통신을 구현할 수
+                    있었습니다.
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+          <li>
+            2단계 프로젝트 - Squirrel
+            <ul>
+              <li>손을 덜 쓰고 브라우징을 할 수 있게 도와주는 크롬 익스텐션</li>
+              <li>익스텐션 및 백엔드 서버 개발</li>
+              <li>
+                결과
+                <ul>
+                  <li>
+                    익스텐션에서 수집한 데이터를 분석하기 위해 기계학습을
+                    스터디하였습니다.
+                  </li>
+                  <li>
+                    Circle CI, Jenkins 와 같은 CI/CD 도구를 적용해봤습니다.
+                  </li>
+                  <li>
+                    실제 크롬 익스텐션을 배포하여 유저들의 브라우징 데이터를
+                    수집하고, 실제 데이터 분석을 시도했습니다.
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </Typography.Text>
+    </TabContentWrapper>
+  );
+};
+
 const TabContentWrapper = styled.div<AlignItemsProps>`
   display: flex;
   width: 100%;
@@ -135,7 +335,7 @@ const Activities = () => {
   const [loading, setLoading] = React.useState(true);
   const [repositories, setRepositories] = React.useState<Repository[]>([]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     (async () => {
       try {
         const res = await getPinnedRepositories();
@@ -160,218 +360,13 @@ const Activities = () => {
       <InfoWrapper paddingTop={0} flexDirection="column">
         <Tabs size="small" defaultActiveKey="repositories">
           <Tabs.TabPane tab="Repositories" key="repositories">
-            <TabContentWrapper>
-              {loading ? (
-                <Spin indicator={<LoadingOutlined spin />} />
-              ) : repositories.length ? (
-                repositories.map((repo, i) => <GitHubRepo key={i} {...repo} />)
-              ) : (
-                <Typography.Text>No repository</Typography.Text>
-              )}
-            </TabContentWrapper>
+            <RepositoryTab loading={loading} repositories={repositories} />
           </Tabs.TabPane>
           <Tabs.TabPane tab="Hackathons" key="hackathons">
-            <TabContentWrapper alignItems="flex-start">
-              <Typography.Text>
-                💛 English version comming soon!
-              </Typography.Text>
-              <Typography.Title level={4}>
-                국민대 해커톤 두리톤
-              </Typography.Title>
-              <Typography.Text>
-                <ul>
-                  <li>2017.05</li>
-                  <li>프로젝트 이름: 겟잇뷰티</li>
-                  <li>역할: 안드로이드 앱 개발자</li>
-                  <li>
-                    결과
-                    <ul>
-                      <li>
-                        해커톤 개발을 리드하여 팀원들과 갈등 관리 및 개발 주도
-                      </li>
-                      <li>
-                        남성인 내가 아닌, 여성의 입장에서 생각을 하며, UI/UX를
-                        제안하고, 개발
-                      </li>
-                      <li>최우수상 수상</li>
-                    </ul>
-                  </li>
-                  <li>
-                    추가설명: 광고성 화장품 순위가 아닌 실제 유저들의 데이터에
-                    기반한 화장품 순위 추천 서비스를 만들었습니다. 아무
-                    화장품이나 바코드를 인식하면 어떤 제품인지 인식할 수 있는
-                    기능을 만들어서 수많은 화장품 정보를 직접 입력해야 하는
-                    수고로움을 덜었씁니다. 사용자의 재구매율 지표를 활용해
-                    사실에 기반한 순위를 추천하도록 하였습니다.
-                  </li>
-                </ul>
-              </Typography.Text>
-              <Typography.Title level={4}>
-                국민대 신입생 해커톤
-              </Typography.Title>
-              <Typography.Text>
-                <ul>
-                  <li>2017.02</li>
-                  <li>프로젝트 이름: 국민택시</li>
-                  <li>역할: 안드로이드 앱 개발자</li>
-                  <li>
-                    결과
-                    <ul>
-                      <li>
-                        국민대 학생 입장에서의 문제상황 파악과 해결방법을
-                        생각해보는 기회
-                      </li>
-                      <li>
-                        국민대 로그인 시스템 취약점을 이용하여 (학교 허가 하에)
-                        리포트를 제출하여 개선
-                      </li>
-                      <li>
-                        각자 맡은 부분에 대해 발표를 하며, 청중의 좋은 반응
-                      </li>
-                      <li>최우수상을 수상</li>
-                    </ul>
-                  </li>
-                  <li>
-                    추가설명: 국민대학교까지 택시 카풀 파티를 만들 수 있는
-                    서비스를 개발하였습니다. 실제 국민대학교 재학생 선배님들의
-                    의견과 카풀 앱의 단점을 보완하여 정확한 신원과 서비스의
-                    신뢰도를 높여 학우들에게 좋은 반응을 이끌어낼 수 있었습니다.
-                    해커톤 종료 후 실제 서비스로 발전시키려 했으나, 서비스화까지
-                    진행하지 못해 아쉬움이 남는 프로젝트 입니다.
-                  </li>
-                </ul>
-              </Typography.Text>
-              <Typography.Title level={4}>
-                단국대 한글날 해커톤 집현톤
-              </Typography.Title>
-              <Typography.Text>
-                <ul>
-                  <li>2015.10</li>
-                  <li>프로젝트 이름: Hey Bill</li>
-                  <li>역할: 안드로이드 앱 개발자</li>
-                  <li>
-                    결과
-                    <ul>
-                      <li>
-                        현업 개발자, 디자이너, 기획자 분들과의 첫 협업의 기회.
-                      </li>
-                      <li>
-                        해커톤에서 거의 모든 기능을 구현한 가장 노력했던 해커톤
-                        중 하나
-                      </li>
-                      <li>
-                        결과가 아닌 과정에 행복함을 느끼고 만족스러웠던 해커톤
-                      </li>
-                    </ul>
-                  </li>
-                  <li>
-                    추가설명: 기획자 2명, 개발자 2명, 디자이너 2명으로
-                    구성되었던 해커톤이었습니다. 카카오에서 서버 개발자로
-                    일하시던 분이 프로젝트를 리드하셨는데 현업에 종사하시는
-                    분들과 팀을 이뤄 진행한 첫 해커톤이어서 프로젝트 완성도가
-                    상당히 높았습니다. 아쉽게도 다른 팀들에 밀려 수상은 하지
-                    못하였지만 무박 3일간 노력하며 과정에 대한 만족도가 제일
-                    높은 해커톤중에 하나였습니다. OCR을 이용해 영수증을 촬영하면
-                    자동으로 사용 내역을 입력해주는 앱을 만들었습니다.
-                  </li>
-                </ul>
-              </Typography.Text>
-            </TabContentWrapper>
+            <HackathonTab />
           </Tabs.TabPane>
           <Tabs.TabPane tab="Extracurricular Activities" key="activities">
-            <TabContentWrapper alignItems="flex-start">
-              <Typography.Text>
-                💛 English version comming soon!
-              </Typography.Text>
-              <Typography.Title level={4}>베트남 봉사활동</Typography.Title>
-              <Typography.Text>
-                <ul>
-                  <li>2017.07.03 ~ 2017.07.14</li>
-                  <li>활동: 노력봉사 및 현지 중등 교사 대상 코딩교육</li>
-                  <li>
-                    결과
-                    <ul>
-                      <li>
-                        현지 중등 교사 대상으로 엔트리와 코드이노를 활용한
-                        커리큘럼 교육
-                      </li>
-                      <li>
-                        10일간의 수업 커리큘럼을 직접 만들어 교육하며, 실제
-                        선생님들의 긍정적인 피드백
-                      </li>
-                      <li>
-                        교육 시설, 환경 등을 정비하고, 청소, 페인트칠, 문화교류
-                        등 활동
-                      </li>
-                    </ul>
-                  </li>
-                  <li>
-                    추가설명: 국민대학교에서 진행한 해외 봉사활동에 참여할 수
-                    있는 소중한 기회를 얻게 되어, 소프트웨어 교육과 노력봉사를
-                    진행하였습니다. 의사소통이 원활하지 않아, 현지 선생님들과
-                    어떻게 하면 효과적으로 수업 내용을 전달할 수 있을지에 대해
-                    깊은 고민을 하며 수업 커리큘럼을 구성할 수 있었던 소중한
-                    시간이었습니다.
-                  </li>
-                </ul>
-              </Typography.Text>
-              <Typography.Title level={4}>
-                Software Maestro 7기
-              </Typography.Title>
-              <Typography.Text>
-                <ul>
-                  <li>2016.07 ~ 2017.06</li>
-                  <li>1단계 및 2단계 연수생으로 활동</li>
-                  <li>
-                    1단계 프로젝트 - Golfit
-                    <ul>
-                      <li>발 압력 측정 및 교정 프로젝트</li>
-                      <li>안드로이드 앱 개발</li>
-                      <li>
-                        결과
-                        <ul>
-                          <li>
-                            임베디드 개발에 대해 간단하게나마 공부할 수 있었던
-                            프로젝트입니다.
-                          </li>
-                          <li>
-                            임베디드 기기와 블루투스 LE를 이용하여 통신을 구현할
-                            수 있었습니다.
-                          </li>
-                        </ul>
-                      </li>
-                    </ul>
-                  </li>
-                  <li>
-                    2단계 프로젝트 - Squirrel
-                    <ul>
-                      <li>
-                        손을 덜 쓰고 브라우징을 할 수 있게 도와주는 크롬
-                        익스텐션
-                      </li>
-                      <li>익스텐션 및 백엔드 서버 개발</li>
-                      <li>
-                        결과
-                        <ul>
-                          <li>
-                            익스텐션에서 수집한 데이터를 분석하기 위해
-                            기계학습을 스터디하였습니다.
-                          </li>
-                          <li>
-                            Circle CI, Jenkins 와 같은 CI/CD 도구를
-                            적용해봤습니다.
-                          </li>
-                          <li>
-                            실제 크롬 익스텐션을 배포하여 유저들의 브라우징
-                            데이터를 수집하고, 실제 데이터 분석을 시도했습니다.
-                          </li>
-                        </ul>
-                      </li>
-                    </ul>
-                  </li>
-                </ul>
-              </Typography.Text>
-            </TabContentWrapper>
+            <ExtraCurricularTab />
           </Tabs.TabPane>
         </Tabs>
       </InfoWrapper>
@@ -516,46 +511,45 @@ const Profile: React.FC = () => {
 const WINDOW_KEYS = ["Activities", "Careers", "Basic Info"];
 
 const Main = () => {
-  const [windowState, setWindowState] = React.useState<WindowContext>(
-    WindowContext.defaultValue
-  );
+  // const [windowState, setWindowState] = useState<WindowContext>(
+  //   WindowContext.defaultValue
+  // );
+  // const setTopWindow = useCallback((key: string) => {
+  //   if (!windowState?.windows.includes(key)) {
+  //     return;
+  //   }
 
-  React.useEffect(() => {
-    const setTopWindow = (key: string) => {
-      if (!windowState?.windows.includes(key)) {
-        return;
-      }
+  //   const newWindows = [...windowState.windows.filter((w) => w !== key), key];
+  //   setWindowState({
+  //     ...windowState,
+  //     windows: newWindows,
+  //     currentTop: key,
+  //   });
+  // }, [windowState]);
 
-      const newWindows = [...windowState.windows.filter((w) => w !== key), key];
-      setWindowState({
-        ...windowState,
-        windows: newWindows,
-        currentTop: key,
-      });
-    };
-
-    if (!windowState.currentTop) {
-      setWindowState({
-        windows: WINDOW_KEYS,
-        currentTop: WINDOW_KEYS[0],
-        setTopWindow,
-      });
-    } else {
-      setWindowState({
-        ...windowState,
-        setTopWindow,
-      });
-    }
-  }, [windowState.windows]);
+  // useEffect(() => {
+  //   if (!windowState.currentTop) {
+  //     setWindowState({
+  //       windows: WINDOW_KEYS,
+  //       currentTop: WINDOW_KEYS[0],
+  //       setTopWindow,
+  //     });
+  //   } else {
+  //     setWindowState({
+  //       ...windowState,
+  //       setTopWindow,
+  //     });
+  //   }
+  // }, [windowState, setTopWindow]);
 
   return (
-    <WindowContext.Context.Provider value={windowState}>
+    // <WindowContext.Context.Provider value={windowState}>
       <Container>
         <Profile />
         <Careers />
         <Activities />
       </Container>
-    </WindowContext.Context.Provider>
+    // {/* </WindowContext.Context.Provider> */}
   );
 };
 
