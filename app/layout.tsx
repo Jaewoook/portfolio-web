@@ -1,50 +1,22 @@
-"use client";
+import "normalize.css";
 
-/**
- * External modules
- */
-import styled from "styled-components";
-import { Layout as LayoutWrapper } from "antd";
+import { main } from "./app.css";
 
-/**
- * Internal modules
- */
-import { Header } from "../components/Header";
-import { StyledComponentsRegistry } from "../libs/styled";
-import "../styles/App.css";
+import type { PropsWithChildren } from "react";
 
-/**
- * Type modules
- */
-import type { ReactNode } from "react";
-
-const Container = styled(LayoutWrapper)`
-  width: 100vw;
-  min-height: 100vh;
-  display: flex;
-  background-color: #000;
-`;
-
-const Wrapper = styled.main`
-  flex: 1;
-`;
-
-interface RootLayoutProps {
-  children: ReactNode;
-}
-
-const RootLayout = ({ children }: RootLayoutProps) => {
+const RootLayout = ({ children }: PropsWithChildren) => {
   return (
     <html lang="ko">
       <head>
-        <title>Jaewook&apos;s Portfolio</title>
+        <title>Jaewook Ahn</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@200;300;400;500;600;700;800;900&display=swap"
+          rel="stylesheet"
+        />
       </head>
       <body>
-        <StyledComponentsRegistry>
-          <Container>
-            <Wrapper>{children}</Wrapper>
-          </Container>
-        </StyledComponentsRegistry>
+        <main className={main}>{children}</main>
       </body>
     </html>
   );
