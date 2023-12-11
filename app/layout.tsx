@@ -1,5 +1,6 @@
 import "normalize.css";
 
+import { Wallpaper } from "./components/Wallpaper";
 import { main } from "./app.css";
 
 import type { PropsWithChildren } from "react";
@@ -16,7 +17,10 @@ const RootLayout = ({ children }: PropsWithChildren) => {
         />
       </head>
       <body>
-        <main className={main}>{children}</main>
+        <main className={main}>
+          <Wallpaper />
+          {children}
+        </main>
       </body>
     </html>
   );
