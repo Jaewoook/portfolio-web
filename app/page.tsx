@@ -1,13 +1,7 @@
-import { ClockIndicator } from "./components/ClockIndicator";
-import { LoginProfile } from "./components/LoginProfile";
+import { redirect } from "next/navigation";
 
-const Login = () => {
-  return (
-    <>
-      <ClockIndicator />
-      <LoginProfile />
-    </>
-  );
+const Index = () => {
+  redirect("/login");
 };
 
-export default Login;
+export default Index;
