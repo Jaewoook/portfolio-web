@@ -1,9 +1,12 @@
-import { style, styleVariants } from "@vanilla-extract/css";
+import { createVar, style, styleVariants } from "@vanilla-extract/css";
+
+export const xPos = createVar("x-pos");
+export const yPos = createVar("y-pos");
 
 export const frame = style({
   position: "absolute",
-  top: 30,
-  left: 50,
+  top: yPos,
+  left: xPos,
   minWidth: 300,
   minHeight: 30,
   boxShadow: "rgba(0, 0, 0, 0.55) 0px 20px 68px",
@@ -17,6 +20,7 @@ export const wrapper = style({
 });
 
 export const header = style({
+  height: 32,
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
@@ -42,9 +46,10 @@ const baseHeaderButton = style({
 });
 
 export const headerButton = styleVariants({
-  close: [baseHeaderButton, { backgroundColor: "rgb(237, 101, 90)" }],
-  minimize: [baseHeaderButton, { backgroundColor: "rgb(225, 192, 76)" }],
-  maximize: [baseHeaderButton, { backgroundColor: "rgb(102, 108, 116)" }],
+  close: [baseHeaderButton, { backgroundColor: "rgb(255, 95, 87)" }],
+  minimize: [baseHeaderButton, { backgroundColor: "rgb(254, 188, 46)" }],
+  maximize: [baseHeaderButton, { backgroundColor: "rgb(43, 200, 64)" }],
+  disabled: [baseHeaderButton, { backgroundColor: "rgb(66, 65, 65)" }],
 });
 
 export const content = style({
