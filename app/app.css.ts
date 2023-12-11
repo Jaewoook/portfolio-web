@@ -2,6 +2,11 @@ import { globalStyle, style } from "@vanilla-extract/css";
 
 globalStyle("body", {
   fontFamily: `"Noto Sans KR", sans-serif`,
+  boxSizing: "border-box",
+});
+
+globalStyle("*, *:before, *:after", {
+  boxSizing: "border-box",
 });
 
 globalStyle("p", {
