@@ -1,13 +1,25 @@
+"use client";
+import { calc } from "@vanilla-extract/css-utils";
 import { assignInlineVars } from "@vanilla-extract/dynamic";
+import type { MouseEventHandler } from "react";
+import { useCallback, useState } from "react";
 
 import * as css from "./Window.css";
 
-interface HeaderOptions {
-  disableMinimize: boolean;
-  disableMaximize: boolean;
+type DragEventHandler = (moveX: number, moveY: number) => void;
+
+interface DragEvent {
+  onDragStart?: () => void;
+  onDragMove: DragEventHandler;
+  onDragEnd?: () => void;
 }
 
-interface HeaderProps extends HeaderOptions {
+interface HeaderOptions {
+  minimizeDisabled: boolean;
+  maximizeDisabled: boolean;
+}
+
+interface HeaderProps extends HeaderOptions, DragEvent {
   onClose?: () => void;
   onMinimize?: () => void;
   onMaximize?: () => void;
@@ -16,31 +28,74 @@ interface HeaderProps extends HeaderOptions {
 const Header = (props: React.PropsWithChildren<HeaderProps>) => {
   const {
     children,
-    disableMaximize,
-    disableMinimize,
+    maximizeDisabled,
+    minimizeDisabled,
     onClose,
     onMaximize,
     onMinimize,
+    onDragStart,
+    onDragMove,
+    onDragEnd,
   } = props;
+  const [isDragging, setDragging] =  useState(false);
+  const [startX, setStartX] =  useState(0);
+  const [startY, setStartY] =  useState(0);
+
+  const dragStart = useCallback<MouseEventHandler<HTMLDivElement>>((e) => {
+    if (isDragging) {
+      return;
+    }
+
+    setDragging(true);
+    setStartX(e.clientX);
+    setStartY(e.clientY);
+    onDragStart?.();
+  }, [isDragging, onDragStart]);
+
+  const dragMove = useCallback<MouseEventHandler<HTMLDivElement>>((e) => {
+    if (!isDragging) {
+      return;
+    }
+
+    const moveX = e.clientX - startX;
+    const moveY = e.clientY - startY;
+    onDragMove(moveX, moveY);
+  }, [isDragging, startX, startY, onDragMove]);
+
+  const dragEnd = useCallback<MouseEventHandler<HTMLDivElement>>((e) => {
+    if (!isDragging) {
+      return;
+    }
+
+    setDragging(false);
+    onDragEnd?.();
+  }, [isDragging, onDragEnd]);
 
   return (
-    <div className={css.header}>
+    <div
+      className={css.header}
+      onMouseDown={dragStart}
+      onMouseUp={dragEnd}
+      onMouseMove={dragMove}
+    >
       <div className={css.headerButtonGroup}>
         <button className={css.headerButton.close} onClick={onClose} />
         <button
           className={
-            !disableMinimize
+            !minimizeDisabled
               ? css.headerButton.minimize
               : css.headerButton.disabled
           }
+          disabled={minimizeDisabled}
           onClick={onMinimize}
         />
         <button
           className={
-            !disableMaximize
+            !maximizeDisabled
               ? css.headerButton.maximize
               : css.headerButton.disabled
           }
+          disabled={maximizeDisabled}
           onClick={onMaximize}
         />
       </div>
@@ -70,32 +125,40 @@ export const scrollbarStyle = css`
 interface Props extends Partial<HeaderOptions> {
   title?: string;
   hideStatusBar?: boolean;
-  x: number;
-  y: number;
+  x: string;
+  y: string;
 }
 
 export const Window = (props: React.PropsWithChildren<Props>) => {
   const {
     children,
     title,
-    disableMinimize = false,
-    disableMaximize = false,
+    minimizeDisabled = false,
+    maximizeDisabled = false,
     x,
     y,
   } = props;
+  const [xPos, setXPos] = useState(x);
+  const [yPos, setYPos] = useState(y);
+
+  const handleDragMove = useCallback<DragEventHandler>((moveX, moveY) => {
+    setXPos(calc.add(x, moveX + "px"));
+    setYPos(calc.add(y, moveY + "px"));
+  }, [x, y]);
 
   return (
     <section
       className={css.frame}
       style={assignInlineVars({
-        [css.xPos]: `${x}px`,
-        [css.yPos]: `${y}px`,
+        [css.xPos]: xPos,
+        [css.yPos]: yPos,
       })}
     >
       <div className={css.wrapper}>
         <Header
-          disableMinimize={disableMinimize}
-          disableMaximize={disableMaximize}
+          minimizeDisabled={minimizeDisabled}
+          maximizeDisabled={maximizeDisabled}
+          onDragMove={handleDragMove}
         >
           {title}
         </Header>
