@@ -7,7 +7,7 @@ import * as css from "./Profile.css";
 
 export const Profile = () => {
   return (
-    <Window x="40%" y="50px" maximizeDisabled minimizeDisabled>
+    <Window x="40%" y="50px" title="Profile" maximizeDisabled minimizeDisabled>
       <div className={css.container}>
         <Image
         className={css.image}

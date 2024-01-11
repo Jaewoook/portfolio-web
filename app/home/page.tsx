@@ -1,3 +1,4 @@
+import { LayerManager } from "../components/Layer";
 import { Profile } from "./components/Profile";
 import { Resume } from "./components/Resume";
 import { Settings } from "./components/Settings";
@@ -68,14 +69,14 @@ import { BlogShortcut, GitHubShortcut, ResumeShortcut } from "./components/Short
 
 const Main = () => {
   return (
-    <>
-      <Profile />
-      <Resume />
-      <Settings />
+    <LayerManager>
       <ResumeShortcut />
       <GitHubShortcut />
       <BlogShortcut />
-    </>
+      <Profile />
+      <Resume />
+      <Settings />
+    </LayerManager>
   );
 };
 
