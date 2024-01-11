@@ -1,8 +1,6 @@
 "use client";
-import { calc } from "@vanilla-extract/css-utils";
 import { assignInlineVars } from "@vanilla-extract/dynamic";
-import type { MouseEventHandler } from "react";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 
 import { useDrag } from "../../hooks";
 import type { DragEvent, DragEventHandler } from "../../hooks/useDrag";
@@ -31,14 +29,14 @@ const Header = (props: React.PropsWithChildren<HeaderProps>) => {
     onDragMove,
     onDragEnd,
   } = props;
-  const ref = useRef(null);
-  const dragRef = useDrag<HTMLDivElement>(0, 0, { onDragStart, onDragMove, onDragEnd });
+  const dragStartTrigger = useDrag(0, 0, {
+    onDragStart,
+    onDragMove,
+    onDragEnd,
+  });
 
   return (
-    <div
-      className={css.header}
-      ref={dragRef}
-    >
+    <div className={css.header} onMouseDown={dragStartTrigger}>
       <div className={css.headerButtonGroup}>
         <button className={css.headerButton.close} onClick={onClose} />
         <button

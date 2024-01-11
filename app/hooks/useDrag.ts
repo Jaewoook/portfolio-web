@@ -1,4 +1,5 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
+import type { MouseEventHandler } from "react";
 
 export type DragEventHandler = (moveX: number, moveY: number) => void;
 
@@ -8,20 +9,19 @@ export interface DragEvent {
   onDragEnd?: () => void;
 }
 
-export const useDrag = <T extends HTMLElement = HTMLElement>(
+export const useDrag = (
   initialXPos: number,
   initialYPos: number,
   { onDragStart, onDragMove, onDragEnd }: DragEvent
 ) => {
-  const ref = useRef<T>(null);
   const [x, setX] = useState(initialXPos);
   const [y, setY] = useState(initialYPos);
   const [isDragging, setDragging] = useState(false);
 
-  const dragStart = useCallback(
-    (e: MouseEvent) => {
+  const dragStart = useCallback<MouseEventHandler>(
+    (e) => {
       setDragging(true);
-      const boundingRect = (e.target as T).getBoundingClientRect();
+      const boundingRect = (e.target as HTMLElement).getBoundingClientRect();
       setX(e.clientX - boundingRect.x);
       setY(e.clientY - boundingRect.y);
       onDragStart?.();
@@ -47,12 +47,6 @@ export const useDrag = <T extends HTMLElement = HTMLElement>(
   );
 
   useEffect(() => {
-    if (ref.current) {
-      ref.current.onmousedown = dragStart;
-    }
-  }, [ref, dragStart]);
-
-  useEffect(() => {
     if (isDragging) {
       document.addEventListener("mousemove", dragMove);
       document.addEventListener("mouseup", dragEnd);
@@ -64,5 +58,5 @@ export const useDrag = <T extends HTMLElement = HTMLElement>(
     };
   }, [isDragging, dragMove, dragEnd]);
 
-  return ref;
+  return dragStart;
 };

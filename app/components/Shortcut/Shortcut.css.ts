@@ -14,7 +14,6 @@ export const container = style({
   flexFlow: "column wrap",
   alignItems: "center",
   gap: 2,
-  padding: 8,
 });
 
 const baseIconWrapper = style({

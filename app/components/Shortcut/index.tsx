@@ -1,9 +1,10 @@
 "use client";
 import { assignInlineVars } from "@vanilla-extract/dynamic";
 import type { MouseEventHandler, ReactNode } from "react";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
-import { useCoordinateValues } from "../../hooks/useCoordinateValues";
+import { useCoordinateValues, useDrag } from "../../hooks";
+import type { DragEventHandler } from "../../hooks/useDrag";
 import { useOutsideClick } from "../../hooks/useOutsideClick";
 import * as css from "./Shortcut.css";
 
@@ -19,6 +20,15 @@ export const Shortcut = (props: Props) => {
   const { icon, label, initialX = "0px", initialY = "0px", onClick } = props;
   const { x, y, setCoordinate } = useCoordinateValues(initialX, initialY);
   const [selected, setSelected] = useState(false);
+
+  const handleDragMove = useCallback<DragEventHandler>(
+    (x, y) => {
+      setCoordinate(`${x}px`, `${y}px`);
+    },
+    [setCoordinate]
+  );
+
+  const onDragStart = useDrag(0, 0, { onDragMove: handleDragMove });
 
   const handleClick = useCallback<MouseEventHandler<HTMLDivElement>>(
     (e) => {
@@ -45,6 +55,7 @@ export const Shortcut = (props: Props) => {
         [css.yPos]: y,
       })}
       ref={boundRef}
+      onMouseDown={onDragStart}
       onClick={handleClick}
     >
       <div className={css.container}>
