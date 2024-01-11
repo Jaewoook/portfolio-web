@@ -2,17 +2,11 @@
 import { calc } from "@vanilla-extract/css-utils";
 import { assignInlineVars } from "@vanilla-extract/dynamic";
 import type { MouseEventHandler } from "react";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
+import { useDrag } from "../../hooks";
+import type { DragEvent, DragEventHandler } from "../../hooks/useDrag";
 import * as css from "./Window.css";
-
-type DragEventHandler = (moveX: number, moveY: number) => void;
-
-interface DragEvent {
-  onDragStart?: () => void;
-  onDragMove: DragEventHandler;
-  onDragEnd?: () => void;
-}
 
 interface HeaderOptions {
   minimizeDisabled: boolean;
@@ -37,46 +31,13 @@ const Header = (props: React.PropsWithChildren<HeaderProps>) => {
     onDragMove,
     onDragEnd,
   } = props;
-  const [isDragging, setDragging] =  useState(false);
-  const [startX, setStartX] =  useState(0);
-  const [startY, setStartY] =  useState(0);
-
-  const dragStart = useCallback<MouseEventHandler<HTMLDivElement>>((e) => {
-    if (isDragging) {
-      return;
-    }
-
-    setDragging(true);
-    setStartX(e.clientX);
-    setStartY(e.clientY);
-    onDragStart?.();
-  }, [isDragging, onDragStart]);
-
-  const dragMove = useCallback<MouseEventHandler<HTMLDivElement>>((e) => {
-    if (!isDragging) {
-      return;
-    }
-
-    const moveX = e.clientX - startX;
-    const moveY = e.clientY - startY;
-    onDragMove(moveX, moveY);
-  }, [isDragging, startX, startY, onDragMove]);
-
-  const dragEnd = useCallback<MouseEventHandler<HTMLDivElement>>((e) => {
-    if (!isDragging) {
-      return;
-    }
-
-    setDragging(false);
-    onDragEnd?.();
-  }, [isDragging, onDragEnd]);
+  const ref = useRef(null);
+  const dragRef = useDrag<HTMLDivElement>(0, 0, { onDragStart, onDragMove, onDragEnd });
 
   return (
     <div
       className={css.header}
-      onMouseDown={dragStart}
-      onMouseUp={dragEnd}
-      onMouseMove={dragMove}
+      ref={dragRef}
     >
       <div className={css.headerButtonGroup}>
         <button className={css.headerButton.close} onClick={onClose} />
@@ -141,10 +102,11 @@ export const Window = (props: React.PropsWithChildren<Props>) => {
   const [xPos, setXPos] = useState(x);
   const [yPos, setYPos] = useState(y);
 
-  const handleDragMove = useCallback<DragEventHandler>((moveX, moveY) => {
-    setXPos(calc.add(x, moveX + "px"));
-    setYPos(calc.add(y, moveY + "px"));
-  }, [x, y]);
+  const handleDragMove = useCallback<DragEventHandler>((x, y) => {
+    setXPos(x + "px");
+    setYPos(y + "px");
+    // console.log("x:", calc.add(x, moveX + "px"), "y:", calc.add(y, moveY + "px"));
+  }, []);
 
   return (
     <section
