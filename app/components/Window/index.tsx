@@ -4,6 +4,7 @@ import { useCallback, useRef, useState } from "react";
 
 import { useDrag } from "../../hooks";
 import type { DragEvent, DragEventHandler } from "../../hooks/useDrag";
+import { Layer } from "../Layer";
 import * as css from "./Window.css";
 
 interface HeaderOptions {
@@ -82,7 +83,7 @@ export const scrollbarStyle = css`
 */
 
 interface Props extends Partial<HeaderOptions> {
-  title?: string;
+  title: string;
   hideStatusBar?: boolean;
   x: string;
   y: string;
@@ -103,27 +104,32 @@ export const Window = (props: React.PropsWithChildren<Props>) => {
   const handleDragMove = useCallback<DragEventHandler>((x, y) => {
     setXPos(x + "px");
     setYPos(y + "px");
-    // console.log("x:", calc.add(x, moveX + "px"), "y:", calc.add(y, moveY + "px"));
   }, []);
 
   return (
-    <section
-      className={css.frame}
-      style={assignInlineVars({
-        [css.xPos]: xPos,
-        [css.yPos]: yPos,
-      })}
-    >
-      <div className={css.wrapper}>
-        <Header
-          minimizeDisabled={minimizeDisabled}
-          maximizeDisabled={maximizeDisabled}
-          onDragMove={handleDragMove}
+    <Layer layerId={"window-" + title}>
+      {({ zIndex, focus }) => (
+        <section
+          className={css.frame}
+          onMouseDown={focus}
+          style={assignInlineVars({
+            [css.xPos]: xPos,
+            [css.yPos]: yPos,
+            [css.zIndex]: String(zIndex),
+          })}
         >
-          {title}
-        </Header>
-        <div className={css.content}>{children}</div>
-      </div>
-    </section>
+          <div className={css.wrapper}>
+            <Header
+              minimizeDisabled={minimizeDisabled}
+              maximizeDisabled={maximizeDisabled}
+              onDragMove={handleDragMove}
+            >
+              {title}
+            </Header>
+            <div className={css.content}>{children}</div>
+          </div>
+        </section>
+      )}
+    </Layer>
   );
 };

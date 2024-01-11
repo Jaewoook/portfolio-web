@@ -1,7 +1,8 @@
 import { createVar, style, styleVariants } from "@vanilla-extract/css";
 
-export const xPos = createVar("x-pos");
-export const yPos = createVar("y-pos");
+export const xPos = createVar();
+export const yPos = createVar();
+export const zIndex = createVar();
 
 export const frame = style({
   position: "absolute",
@@ -11,6 +12,7 @@ export const frame = style({
   minHeight: 30,
   boxShadow: "rgba(0, 0, 0, 0.55) 0px 20px 68px",
   color: "#fff",
+  zIndex,
 });
 
 export const wrapper = style({
