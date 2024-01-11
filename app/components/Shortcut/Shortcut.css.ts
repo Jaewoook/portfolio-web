@@ -46,7 +46,7 @@ const baseLabel = style({
   fontWeight: 500,
   color: "#fff",
   userSelect: "none",
-  padding: 2,
+  padding: "4px 2px",
   textShadow: "0 2px 2px #545454",
 });
 
