@@ -30,9 +30,13 @@ export const Shortcut = (props: Props) => {
 
   const onDragStart = useDrag(0, 0, { onDragMove: handleDragMove });
 
+  const handleMouseDown = useCallback<MouseEventHandler<HTMLDivElement>>((e) => {
+    setSelected(true);
+    onDragStart(e);
+  }, [onDragStart]);
+
   const handleClick = useCallback<MouseEventHandler<HTMLDivElement>>(
     (e) => {
-      setSelected(true);
 
       if (e.detail === 2) {
         onClick?.();
@@ -55,7 +59,7 @@ export const Shortcut = (props: Props) => {
         [css.yPos]: y,
       })}
       ref={boundRef}
-      onMouseDown={onDragStart}
+      onMouseDown={handleMouseDown}
       onClick={handleClick}
     >
       <div className={css.container}>
