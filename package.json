@@ -15,9 +15,13 @@
     "start": "next dev -p 1213",
     "start:prod": "next start",
     "build": "next build",
-    "lint": "next lint"
+    "lint": "next lint",
+    "commitlint": "commitlint --edit",
+    "prepare": "husky install"
   },
   "devDependencies": {
+    "@commitlint/cli": "^18.4.4",
+    "@commitlint/config-conventional": "^18.4.4",
     "@types/node": "^20.2.5",
     "@types/react": "^18.2.14",
     "@types/react-dom": "^18.2.6",
@@ -25,6 +29,7 @@
     "cross-env": "^7.0.2",
     "eslint": "8.44.0",
     "eslint-config-next": "13.4.7",
+    "husky": "^8.0.3",
     "typescript": "^5.1.6"
   },
   "dependencies": {
