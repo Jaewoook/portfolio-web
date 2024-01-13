@@ -2,7 +2,7 @@ import { LayerManager } from "../components/Layer";
 import { Profile } from "./components/Profile";
 import { Resume } from "./components/Resume";
 import { Settings } from "./components/Settings";
-import { BlogShortcut, GitHubShortcut, ResumeShortcut } from "./components/Shortcuts";
+import * as Shortcut from "./components/Shortcuts";
 // import { scrollbarStyle } from "../../components/WindowFrame";
 
 // const GitHubRepoWrapper = styled.div`
@@ -70,9 +70,11 @@ import { BlogShortcut, GitHubShortcut, ResumeShortcut } from "./components/Short
 const Main = () => {
   return (
     <LayerManager>
-      <ResumeShortcut />
-      <GitHubShortcut />
-      <BlogShortcut />
+      <Shortcut.ResumeShortcut />
+      <Shortcut.GitHubShortcut />
+      <Shortcut.SettingsShortcut />
+      <Shortcut.BlogShortcut />
+      <Shortcut.ProfileShortcut />
       <Profile />
       <Resume />
       <Settings />
