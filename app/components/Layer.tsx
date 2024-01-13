@@ -18,6 +18,7 @@ interface LayerRenderParams {
   zIndex: number;
   focus: () => void;
   blur: () => void;
+  remove: () => void;
 }
 
 interface LayerProps {
@@ -29,13 +30,17 @@ export const Layer = (props: LayerProps) => {
   const { children, layerId } = props;
   const { layers, addLayer, removeLayer, focus, blur } =
     useContext(LayerContext);
-  const zIndex = useMemo(
-    () => BASE_Z_INDEX + layers.indexOf(layerId),
-    [layers, layerId]
-  );
+  const zIndex = useMemo(() => {
+    const layerIndex = layers.indexOf(layerId);
+    return layerIndex >= 0 ? BASE_Z_INDEX + layerIndex : -1;
+  }, [layers, layerId]);
 
   const focusCurrent = useCallback(() => focus(layerId), [focus, layerId]);
   const blurCurrent = useCallback(() => blur(layerId), [blur, layerId]);
+  const removeCurrent = useCallback(
+    () => removeLayer(layerId),
+    [removeLayer, layerId]
+  );
 
   useEffect(() => {
     addLayer(layerId);
@@ -44,7 +49,12 @@ export const Layer = (props: LayerProps) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  return children({ zIndex, focus: focusCurrent, blur: blurCurrent });
+  return children({
+    zIndex,
+    focus: focusCurrent,
+    blur: blurCurrent,
+    remove: removeCurrent,
+  });
 };
 
 export const LayerManager = (props: React.PropsWithChildren) => {

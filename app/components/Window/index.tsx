@@ -1,6 +1,6 @@
 "use client";
 import { assignInlineVars } from "@vanilla-extract/dynamic";
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useState } from "react";
 
 import { useDrag } from "../../hooks";
 import type { DragEvent, DragEventHandler } from "../../hooks/useDrag";
@@ -108,7 +108,7 @@ export const Window = (props: React.PropsWithChildren<Props>) => {
 
   return (
     <Layer layerId={"window-" + title}>
-      {({ zIndex, focus }) => (
+      {({ zIndex, focus, remove }) => (
         <section
           className={css.frame}
           onMouseDown={focus}
@@ -123,6 +123,7 @@ export const Window = (props: React.PropsWithChildren<Props>) => {
               minimizeDisabled={minimizeDisabled}
               maximizeDisabled={maximizeDisabled}
               onDragMove={handleDragMove}
+              onClose={remove}
             >
               {title}
             </Header>
