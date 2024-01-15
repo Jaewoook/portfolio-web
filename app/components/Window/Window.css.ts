@@ -10,15 +10,16 @@ export const frame = style({
   left: xPos,
   minWidth: 300,
   minHeight: 30,
-  boxShadow: "rgba(0, 0, 0, 0.55) 0px 20px 68px",
-  color: "#fff",
   zIndex,
 });
 
 export const wrapper = style({
+  color: "#fff",
+  boxShadow: "rgba(0, 0, 0, 0.55) 0px 20px 68px",
   backgroundColor: "#333",
   border: "1px solid #5c5c5c",
-  borderRadius: 6,
+  borderRadius: 12,
+  overflow: "hidden",
 });
 
 export const header = style({
@@ -55,7 +56,7 @@ export const headerButton = styleVariants({
 });
 
 export const content = style({
-  overflowY: "scroll",
+  overflow: "scroll",
 });
 
 // const zoomIn = keyframes`
