@@ -16,6 +16,7 @@ const BASE_Z_INDEX = 10;
 
 interface LayerRenderParams {
   zIndex: number;
+  isTopLayer: boolean;
   focus: () => void;
   blur: () => void;
   remove: () => void;
@@ -34,6 +35,7 @@ export const Layer = (props: LayerProps) => {
     const layerIndex = layers.indexOf(layerId);
     return layerIndex >= 0 ? BASE_Z_INDEX + layerIndex : -1;
   }, [layers, layerId]);
+  const isTopLayer = useMemo(() => layers.indexOf(layerId) === layers.length - 1, [layers, layerId]);
 
   const focusCurrent = useCallback(() => focus(layerId), [focus, layerId]);
   const blurCurrent = useCallback(() => blur(layerId), [blur, layerId]);
@@ -51,6 +53,7 @@ export const Layer = (props: LayerProps) => {
 
   return children({
     zIndex,
+    isTopLayer,
     focus: focusCurrent,
     blur: blurCurrent,
     remove: removeCurrent,

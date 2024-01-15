@@ -13,6 +13,7 @@ interface HeaderOptions {
 }
 
 interface HeaderProps extends HeaderOptions, DragEvent {
+  active: boolean;
   onClose?: () => void;
   onMinimize?: () => void;
   onMaximize?: () => void;
@@ -21,6 +22,7 @@ interface HeaderProps extends HeaderOptions, DragEvent {
 const Header = (props: React.PropsWithChildren<HeaderProps>) => {
   const {
     children,
+    active,
     maximizeDisabled,
     minimizeDisabled,
     onClose,
@@ -39,11 +41,18 @@ const Header = (props: React.PropsWithChildren<HeaderProps>) => {
   return (
     <div className={css.header} onMouseDown={dragStartTrigger}>
       <div className={css.headerButtonGroup}>
-        <button className={css.headerButton.close} onClick={onClose} />
         <button
           className={
-            !minimizeDisabled
-              ? css.headerButton.minimize
+            active ? css.headerButton.close : css.headerButton.disabled
+          }
+          onClick={onClose}
+        />
+        <button
+          className={
+            active
+              ? !minimizeDisabled
+                ? css.headerButton.minimize
+                : css.headerButton.disabled
               : css.headerButton.disabled
           }
           disabled={minimizeDisabled}
@@ -51,8 +60,10 @@ const Header = (props: React.PropsWithChildren<HeaderProps>) => {
         />
         <button
           className={
-            !maximizeDisabled
-              ? css.headerButton.maximize
+            active
+              ? !maximizeDisabled
+                ? css.headerButton.maximize
+                : css.headerButton.disabled
               : css.headerButton.disabled
           }
           disabled={maximizeDisabled}
@@ -108,7 +119,7 @@ export const Window = (props: React.PropsWithChildren<Props>) => {
 
   return (
     <Layer layerId={"window-" + title}>
-      {({ zIndex, focus, remove }) => (
+      {({ zIndex, isTopLayer, focus, remove }) => (
         <section
           className={css.frame}
           onMouseDown={focus}
@@ -120,6 +131,7 @@ export const Window = (props: React.PropsWithChildren<Props>) => {
         >
           <div className={css.wrapper}>
             <Header
+              active={isTopLayer}
               minimizeDisabled={minimizeDisabled}
               maximizeDisabled={maximizeDisabled}
               onDragMove={handleDragMove}
