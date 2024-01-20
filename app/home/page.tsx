@@ -75,9 +75,9 @@ const Main = () => {
       <Shortcut.SettingsShortcut />
       <Shortcut.BlogShortcut />
       <Shortcut.ProfileShortcut />
-      <Profile />
       <Resume />
       <Settings />
+      <Profile />
     </LayerManager>
   );
 };

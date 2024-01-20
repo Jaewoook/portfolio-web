@@ -3212,6 +3212,11 @@ pathe@^1.1.0, pathe@^1.1.1:
   resolved "https://registry.yarnpkg.com/pathe/-/pathe-1.1.1.tgz#1dd31d382b974ba69809adc9a7a347e65d84829a"
   integrity sha512-d+RQGp0MAYTIaDBIMmOfMwz3E+LOZnxx1HZd5R18mmCZY0QBlK0LDZfPc8FW8Ed2DlvsuE6PRjroDY+wg4+j/Q==
 
+pdfium.js@^0.2.1-rc.1:
+  version "0.2.1-rc.1"
+  resolved "https://registry.yarnpkg.com/pdfium.js/-/pdfium.js-0.2.1-rc.1.tgz#e6cc3178fd6e6548cf632a196c86c94acbfee65c"
+  integrity sha512-fDHZl5yoMGvPDcqcNhv6kelZIdC1WKbstucvpgzVmCSrxou129ISi8sEDYKfH7yJZPFW1Wk4eJh1u/Z/gZdTRw==
+
 picocolors@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/picocolors/-/picocolors-1.0.0.tgz#cb5bdc74ff3f51892236eaf79d68bc44564ab81c"
