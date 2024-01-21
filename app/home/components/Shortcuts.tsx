@@ -1,12 +1,6 @@
 "use client";
+import Image from "next/image";
 import { useCallback, useContext } from "react";
-import {
-  PiCodeLight,
-  PiFileTextLight,
-  PiGearLight,
-  PiGithubLogoLight,
-  PiUserLight,
-} from "react-icons/pi";
 
 import { Shortcut } from "../../components/Shortcut";
 import { LayerContext } from "../../contexts/LayerContext";
@@ -18,7 +12,11 @@ export const ProfileShortcut = () => {
   }, [addLayer]);
 
   return (
-    <Shortcut icon={<PiUserLight />} label="Profile" onClick={handleClick} />
+    <Shortcut
+      icon={<Image width={72} height={72} src="/images/icons/icon-profile.png" alt="profile icon" />}
+      label="Profile"
+      onClick={handleClick}
+    />
   );
 };
 
@@ -29,7 +27,12 @@ export const ResumeShortcut = () => {
   }, [addLayer]);
 
   return (
-    <Shortcut icon={<PiFileTextLight />} label="Resume" initialY="120px" onClick={handleClick} />
+    <Shortcut
+      icon={<Image width={72} height={72} src="/images/icons/icon-resume.png" alt="resume icon" />}
+      label="Resume"
+      initialY="120px"
+      onClick={handleClick}
+    />
   );
 };
 
@@ -40,7 +43,12 @@ export const SettingsShortcut = () => {
   }, [addLayer]);
 
   return (
-    <Shortcut icon={<PiGearLight />} label="Settings" initialY="240px" onClick={handleClick} />
+    <Shortcut
+      icon={<Image width={72} height={72} src="/images/icons/icon-settings.png" alt="settings icon" />}
+      label="Settings"
+      initialY="240px"
+      onClick={handleClick}
+    />
   );
 };
 
@@ -51,7 +59,7 @@ export const GitHubShortcut = () => {
 
   return (
     <Shortcut
-      icon={<PiGithubLogoLight />}
+      icon={<Image width={72} height={72} src="/images/icons/icon-github.png" alt="github icon" />}
       label="GitHub"
       initialY="360px"
       onClick={handleClick}
@@ -67,7 +75,7 @@ export const BlogShortcut = () => {
 
   return (
     <Shortcut
-      icon={<PiCodeLight />}
+      icon={<Image width={72} height={72} src="/images/icons/icon-blog.png" alt="blog icon" />}
       label="Blog"
       initialY="480px"
       onClick={handleClick}
