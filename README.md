@@ -1,6 +1,6 @@
-<h2 align="center">Portfolio</h2>
+<h1 align="center">Jaewook's Portfolio Web</h1>
 
-<p align="center">My web based portfolio site built on Next.</p>
+<p align="center">My portfolio website built on Next.js.</p>
 
 <p align="center">
     <a href="https://portfolio.jaewook.me">Visit Website</a>

@@ -10,6 +10,7 @@
     "name": "Jaewook Ahn",
     "email": "dev.jaewook@gmail.com"
   },
+  "license": "MIT",
   "private": true,
   "scripts": {
     "start": "next dev -p 1213",
