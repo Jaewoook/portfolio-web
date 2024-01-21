@@ -10,6 +10,8 @@
     </a>
 </p>
 
+![Site Screenshot](./site-screenshot.png)
+
 ## Author
 
 - [Jaewook Ahn](https://github.com/Jaewoook)
