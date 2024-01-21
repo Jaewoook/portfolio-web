@@ -1,35 +1,19 @@
-# portfolio-web
+<h1 align="center">Jaewook's Portfolio Web</h1>
 
-## Concept
+<p align="center">My portfolio website built on Next.js.</p>
 
-- Product landing page
-- SPA
-- One page per section
-- interactive contact - like email subscribe
+<p align="center">
+    <a href="https://portfolio.jaewook.me">Visit Website</a>
+    &middot;
+    <a href="https://github.com/Jaewoook/portfolio-web/actions/workflows/ci.yml">
+        <img alt="CI status" src="https://github.com/Jaewoook/portfolio-web/actions/workflows/ci.yml/badge.svg" />
+    </a>
+</p>
 
-## 구성
+## Author
 
-- 기본 정보
-    - 어던 사람인가? - 관심사, 
+- [Jaewook Ahn](https://github.com/Jaewoook)
 
-- 커리어
-    - 다녔던 회사, 포지션
-    - 재직 중 했던 것들
+## License
 
-- 그 외 활동
-    - 깃허브
-
-## Section 구성
-
-0. Site Header (auto hide)
-    - GitHub, Blog
-1. Landing - First
-    - Jaewook Ahn
-    - Web Front-end engineer
-2. Features
-    - Skill Set
-    - Career
-
-X. Contact me
-    - email, message form
-    - GitHub, SNS link
+This project is licensed under the [MIT License](./LICENSE).

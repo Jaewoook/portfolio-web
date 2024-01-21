@@ -1,47 +1,50 @@
 {
   "name": "portfolio-web",
   "version": "1.0.0",
-  "description": "Portfolio web for me",
-  "main": "index.js",
-  "repository": "git@github.com:Jaewoook/portfolio-web.git",
-  "author": "Jaewook Ahn <ajw4586@gmail.com>",
-  "license": "NO_LICENSE",
+  "description": "Jaewook Ahn's Portfolio Website",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Jaewoook/portfolio-web.git"
+  },
+  "author": {
+    "name": "Jaewook Ahn",
+    "email": "dev.jaewook@gmail.com"
+  },
+  "license": "MIT",
   "private": true,
   "scripts": {
-    "start": "cross-env REACT_APP_ENV=development react-scripts start",
-    "start-production": "cross-env REACT_APP_ENV=production react-scripts start",
-    "build": "cross-env REACT_APP_ENV=production react-scripts build"
+    "start": "next dev -p 1213",
+    "start:prod": "next start",
+    "build": "next build",
+    "lint": "next lint",
+    "commitlint": "commitlint --edit",
+    "prepare": "husky install"
   },
   "devDependencies": {
-    "@types/node": "^14.14.6",
-    "@types/react": "^16.9.44",
-    "@types/react-dom": "^16.9.8",
-    "@types/styled-components": "^5.1.4",
-    "@types/styled-system": "^5.1.10",
+    "@commitlint/cli": "^18.4.4",
+    "@commitlint/config-conventional": "^18.4.4",
+    "@types/node": "^20.2.5",
+    "@types/react": "^18.2.14",
+    "@types/react-dom": "^18.2.6",
+    "@vanilla-extract/next-plugin": "^2.3.2",
     "cross-env": "^7.0.2",
-    "typescript": "^3.9.5"
+    "eslint": "8.44.0",
+    "eslint-config-next": "13.4.7",
+    "husky": "^8.0.3",
+    "typescript": "^5.1.6"
   },
   "dependencies": {
-    "@ant-design/icons": "^4.2.2",
-    "antd": "^4.3.5",
-    "axios": "^0.21.0",
-    "react": "^16.13.1",
-    "react-dom": "^16.13.1",
-    "react-draggable": "^4.4.3",
-    "react-scripts": "^3.4.1",
-    "styled-components": "^5.2.1",
-    "styled-system": "^5.1.5"
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
+    "@vanilla-extract/css": "^1.14.0",
+    "@vanilla-extract/dynamic": "^2.1.0",
+    "@vanilla-extract/recipes": "^0.5.1",
+    "axios": "^1.4.0",
+    "date-fns": "^2.30.0",
+    "next": "^13.4.7",
+    "normalize.css": "^8.0.1",
+    "pdfium.js": "^0.2.1-rc.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-draggable": "^4.4.4",
+    "react-icons": "^4.10.1"
   }
 }
