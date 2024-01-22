@@ -1,4 +1,5 @@
 import { LayerManager } from "../components/Layer";
+import { MenuBar } from "../components/MenuBar";
 import { Profile } from "./components/Profile";
 import { Resume } from "./components/Resume";
 import { Settings } from "./components/Settings";
@@ -70,6 +71,7 @@ import * as Shortcut from "./components/Shortcuts";
 const Main = () => {
   return (
     <LayerManager>
+      <MenuBar />
       <Shortcut.ResumeShortcut />
       <Shortcut.GitHubShortcut />
       <Shortcut.SettingsShortcut />

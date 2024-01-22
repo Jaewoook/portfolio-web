@@ -15,6 +15,8 @@ export const ProfileShortcut = () => {
     <Shortcut
       icon={<Image width={72} height={72} src="/images/icons/icon-profile.png" alt="profile icon" />}
       label="Profile"
+      initialX="24px"
+      initialY="40px"
       onClick={handleClick}
     />
   );
@@ -30,7 +32,8 @@ export const ResumeShortcut = () => {
     <Shortcut
       icon={<Image width={72} height={72} src="/images/icons/icon-resume.png" alt="resume icon" />}
       label="Resume"
-      initialY="120px"
+      initialX="24px"
+      initialY="160px"
       onClick={handleClick}
     />
   );
@@ -46,7 +49,8 @@ export const SettingsShortcut = () => {
     <Shortcut
       icon={<Image width={72} height={72} src="/images/icons/icon-settings.png" alt="settings icon" />}
       label="Settings"
-      initialY="240px"
+      initialX="24px"
+      initialY="280px"
       onClick={handleClick}
     />
   );
@@ -61,7 +65,8 @@ export const GitHubShortcut = () => {
     <Shortcut
       icon={<Image width={72} height={72} src="/images/icons/icon-github.png" alt="github icon" />}
       label="GitHub"
-      initialY="360px"
+      initialX="24px"
+      initialY="400px"
       onClick={handleClick}
     />
   );
@@ -77,7 +82,8 @@ export const BlogShortcut = () => {
     <Shortcut
       icon={<Image width={72} height={72} src="/images/icons/icon-blog.png" alt="blog icon" />}
       label="Blog"
-      initialY="480px"
+      initialX="24px"
+      initialY="520px"
       onClick={handleClick}
     />
   );
