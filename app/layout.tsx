@@ -27,6 +27,7 @@ const RootLayout = ({ children }: PropsWithChildren) => {
 };
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://portfolio.jaewook.me"),
   title: "Jaewook Ahn - Portfolio",
   description: "Jaewook Ahn's Portfolio Website",
   applicationName: "Jaewook Ahn | Portfolio",
