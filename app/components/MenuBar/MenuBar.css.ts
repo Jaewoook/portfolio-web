@@ -15,16 +15,26 @@ export const container = style({
 
 export const menuWrapper = style({
   display: "inline-flex",
+  flexFlow: "row",
   alignItems: "center",
+  gap: 20,
   flex: 1,
 });
 
 export const rightMenuWrapper = style([menuWrapper, {
-  flexDirection: "row-reverse",
+  flexFlow: "row-reverse",
   marginLeft: "auto",
 }]);
 
-export const clock = style({
+export const menuIndicator = style({
+  display: "flex",
+  flexFlow: "row",
+  gap: 4,
   color: "#fff",
   fontSize: 14,
+  alignItems: "center",
 });
+
+export const batteryIndicator = style([menuIndicator, {
+  fontSize: 12,
+}]);
