@@ -1,58 +1,33 @@
 "use client";
-import { format } from "date-fns";
-import { useEffect, useMemo, useState } from "react";
-import { IoBatteryCharging, IoBatteryFull, IoBatteryHalf } from "react-icons/io5";
+import { useCallback, useState } from "react";
 
-import { useClock } from "../../hooks";
+import { menuBarContext } from "../../contexts/MenuBarContext";
+import type { IMenuBarContext } from "../../contexts/MenuBarContext";
 import * as css from "./MenuBar.css";
 
-const ClockIndicator = () => {
-  const time = useClock();
-  const clock = useMemo(() => format(time, "E MMM d") + "\u00A0\u00A0" + format(time, "h:mm a"), [time]);
+interface Props {
+  leftMenu: React.ReactNode;
+  rightMenu: React.ReactNode;
+}
 
-  return <p className={css.menuIndicator}>{clock}</p>;
-};
+export const MenuBar = (props: Props) => {
+  const { leftMenu, rightMenu } = props;
+  const [openedMenuId, setOpenedMenuId] = useState<string | null>(null);
 
-const BatteryIndicator = () => {
-  const [battery, setBattery] = useState<Battery>({
-    charging: false,
-    chargingTime: 0,
-    dischargingTime: 0,
-    level: 1,
-  });
-  const batteryPercent = useMemo(() => (battery.level * 100).toString() + "%", [battery]);
-  const batteryIcon = useMemo(() => {
-    if (battery.charging) {
-      return <IoBatteryCharging size={22} />;
-    }
-
-    if (battery.level !== 1) {
-      return <IoBatteryHalf size={22} />;
-    }
-
-    return <IoBatteryFull size={22} />;
-  }, [battery]);
-
-  useEffect(() => {
-    window.navigator.getBattery?.().then((battery) => setBattery(battery));
-  }, []);
+  const openMenu = useCallback((menuId: string) => setOpenedMenuId(menuId), []);
+  const closeMenu = useCallback(() => setOpenedMenuId(null), []);
+  const value: IMenuBarContext = { openedMenuId, openMenu, closeMenu };
 
   return (
-    <p className={css.batteryIndicator}>
-      {batteryPercent}
-      {batteryIcon}
-    </p>
-  );
-};
-
-export const MenuBar = () => {
-  return (
-    <nav className={css.container}>
-      <div className={css.menuWrapper}></div>
-      <div className={css.rightMenuWrapper}>
-        <ClockIndicator />
-        <BatteryIndicator />
-      </div>
-    </nav>
+    <menuBarContext.Provider value={value}>
+      <nav className={css.container}>
+        <div className={css.wrapper}>
+          {leftMenu}
+        </div>
+        <div className={css.rightMenuWrapper}>
+          {rightMenu}
+        </div>
+      </nav>
+    </menuBarContext.Provider>
   );
 };

@@ -13,7 +13,7 @@ export const container = style({
   display: "flex",
 });
 
-export const menuWrapper = style({
+export const wrapper = style({
   display: "inline-flex",
   flexFlow: "row",
   alignItems: "center",
@@ -21,20 +21,7 @@ export const menuWrapper = style({
   flex: 1,
 });
 
-export const rightMenuWrapper = style([menuWrapper, {
+export const rightMenuWrapper = style([wrapper, {
   flexFlow: "row-reverse",
   marginLeft: "auto",
-}]);
-
-export const menuIndicator = style({
-  display: "flex",
-  flexFlow: "row",
-  gap: 4,
-  color: "#fff",
-  fontSize: 14,
-  alignItems: "center",
-});
-
-export const batteryIndicator = style([menuIndicator, {
-  fontSize: 12,
 }]);
