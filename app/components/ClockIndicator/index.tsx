@@ -2,7 +2,7 @@
 import { useMemo, useState } from "react";
 import { format } from "date-fns";
 
-import { useClock } from "../../../hooks";
+import { useClock } from "@/hooks";
 import * as css from "./ClockIndicator.css";
 
 export const ClockIndicator = () => {

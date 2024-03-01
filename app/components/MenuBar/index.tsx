@@ -1,21 +1,33 @@
 "use client";
-import { format } from "date-fns";
-import { useMemo } from "react";
+import { useCallback, useState } from "react";
 
-import { useClock } from "../../hooks";
+import { menuBarContext } from "../../contexts/MenuBarContext";
+import type { IMenuBarContext } from "../../contexts/MenuBarContext";
 import * as css from "./MenuBar.css";
 
-export const MenuBar = () => {
-  const time = useClock();
-  const clock = useMemo(() => format(time, "E MMM d") + "\u00A0\u00A0" + format(time, "h:mm a"), [time]);
+interface Props {
+  leftMenu: React.ReactNode;
+  rightMenu: React.ReactNode;
+}
+
+export const MenuBar = (props: Props) => {
+  const { leftMenu, rightMenu } = props;
+  const [openedMenuId, setOpenedMenuId] = useState<string | null>(null);
+
+  const openMenu = useCallback((menuId: string) => setOpenedMenuId(menuId), []);
+  const closeMenu = useCallback(() => setOpenedMenuId(null), []);
+  const value: IMenuBarContext = { openedMenuId, openMenu, closeMenu };
 
   return (
-    <nav className={css.container}>
-      <div className={css.menuWrapper}>
-      </div>
-      <div className={css.rightMenuWrapper}>
-        <p className={css.clock}>{clock}</p>
-      </div>
-    </nav>
+    <menuBarContext.Provider value={value}>
+      <nav className={css.container}>
+        <div className={css.wrapper}>
+          {leftMenu}
+        </div>
+        <div className={css.rightMenuWrapper}>
+          {rightMenu}
+        </div>
+      </nav>
+    </menuBarContext.Provider>
   );
 };

@@ -9,7 +9,7 @@ globalStyle("*, *:before, *:after", {
   boxSizing: "border-box",
 });
 
-globalStyle("p", {
+globalStyle("p, ul", {
   margin: 0,
 });
 

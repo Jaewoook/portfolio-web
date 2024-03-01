@@ -13,18 +13,15 @@ export const container = style({
   display: "flex",
 });
 
-export const menuWrapper = style({
+export const wrapper = style({
   display: "inline-flex",
+  flexFlow: "row",
   alignItems: "center",
+  gap: 20,
   flex: 1,
 });
 
-export const rightMenuWrapper = style([menuWrapper, {
-  flexDirection: "row-reverse",
+export const rightMenuWrapper = style([wrapper, {
+  flexFlow: "row-reverse",
   marginLeft: "auto",
 }]);
-
-export const clock = style({
-  color: "#fff",
-  fontSize: 14,
-});
