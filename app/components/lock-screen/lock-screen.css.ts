@@ -18,8 +18,23 @@ const unlock = keyframes({
   }
 });
 
+const lock = keyframes({
+  "0%": {
+    opacity: 0,
+  },
+  "100%": {
+    opacity: 1,
+  },
+});
+
 export const unlockAnim = style([wrapper, {
   animationName: unlock,
+  animationDuration: "0.25s",
+  animationFillMode: "forwards",
+}]);
+
+export const lockAnim = style([wrapper, {
+  animationName: lock,
   animationDuration: "0.25s",
   animationFillMode: "forwards",
 }]);

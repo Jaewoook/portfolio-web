@@ -20,7 +20,7 @@ export const LockScreen = () => {
 
   return (
     <div
-      className={isLocked ? css.wrapper : css.unlockAnim}
+      className={isLocked ? css.lockAnim : css.unlockAnim}
       style={assignInlineVars({ [css.isVisible]: isVisible ? "visible" : "hidden" })}
       onAnimationEnd={() => setVisible(false)}
     >
