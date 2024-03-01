@@ -1,5 +1,5 @@
 import type { PropsWithChildren } from "react";
-import { Window } from "../../../components/Window";
+import { Window } from "../Window";
 import * as css from "./Settings.css";
 
 interface RowProps {

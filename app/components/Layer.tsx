@@ -9,8 +9,8 @@ import {
 } from "react";
 import type { ReactNode } from "react";
 
-import { LayerContext } from "../contexts/LayerContext";
-import type { ILayerContext } from "../contexts/LayerContext";
+import { LayerContext } from "@/contexts/LayerContext";
+import type { ILayerContext } from "@/contexts/LayerContext";
 
 const BASE_Z_INDEX = 10;
 

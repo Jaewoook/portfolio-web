@@ -1,11 +1,13 @@
+"use client";
 import Image from "next/image";
-import Link from "next/link";
+import { useContext } from "react";
 import { PiArrowCircleRightThin } from "react-icons/pi";
 
+import { LockContext } from "@/contexts/LockContext";
 import * as css from "./LoginProfile.css";
 
-
 export const LoginProfile = () => {
+  const { unlock } = useContext(LockContext);
 
   return (
     <section className={css.userContainer}>
@@ -18,9 +20,9 @@ export const LoginProfile = () => {
       />
       <div className={css.nameBox}>
         <p className={css.nameText}>Jaewook Ahn</p>
-        <Link className={css.unlockText} href="/home">
+        <a className={css.unlockText} onClick={unlock}>
           Click to unlock <PiArrowCircleRightThin className={css.unlockIcon} />
-        </Link>
+        </a>
       </div>
     </section>
   );

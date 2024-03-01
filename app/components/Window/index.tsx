@@ -2,8 +2,9 @@
 import { assignInlineVars } from "@vanilla-extract/dynamic";
 import { useCallback, useState } from "react";
 
-import { useDrag } from "../../hooks";
-import type { DragEvent, DragEventHandler } from "../../hooks/useDrag";
+import { useDrag } from "@/hooks";
+import type { DragEvent, DragEventHandler } from "@/hooks/useDrag";
+
 import { Layer } from "../Layer";
 import * as css from "./Window.css";
 
