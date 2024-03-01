@@ -42,7 +42,7 @@ const Index = () => {
         <Settings />
         <Profile />
       </LayerManager>
-      {lockContextValue.isLocked && <LockScreen />}
+      <LockScreen />
     </LockContext.Provider>
   );
 };
