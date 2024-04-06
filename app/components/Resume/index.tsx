@@ -3,8 +3,8 @@ import axios from "axios";
 import { PDFium } from "pdfium.js";
 import { useCallback, useEffect, useRef, useState } from "react";
 
-import { Window } from "../../../components/Window";
-import { PDFRenderer } from "../../../modules/pdf-renderer";
+import { Window } from "../Window";
+import { PDFRenderer } from "../../modules/pdf-renderer";
 import * as css from "./Resume.css";
 
 export const Resume = () => {

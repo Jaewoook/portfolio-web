@@ -2,8 +2,8 @@
 import Image from "next/image";
 import { useCallback, useContext } from "react";
 
-import { Shortcut } from "../../components/Shortcut";
-import { LayerContext } from "../../contexts/LayerContext";
+import { LayerContext } from "../contexts/LayerContext";
+import { Shortcut } from "./Shortcut";
 
 export const ProfileShortcut = () => {
   const { addLayer } = useContext(LayerContext);

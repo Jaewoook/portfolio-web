@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { PiGithubLogo, PiLinkedinLogo } from "react-icons/pi";
 
-import { Window } from "../../../components/Window";
+import { Window } from "../Window";
 import * as css from "./Profile.css";
 
 export const Profile = () => {
