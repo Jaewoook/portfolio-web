@@ -16,10 +16,11 @@ export const frame = style({
 export const wrapper = style({
   color: "#fff",
   boxShadow: "rgba(0, 0, 0, 0.55) 0px 20px 68px",
-  backgroundColor: "#333",
+  backgroundColor: "rgba(51, 51, 51, 0.85)",
   border: "1px solid #5c5c5c",
   borderRadius: 12,
   overflow: "hidden",
+  backdropFilter: "blur(32px)",
 });
 
 export const header = style({

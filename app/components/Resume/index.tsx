@@ -35,9 +35,7 @@ export const Resume = () => {
 
   return (
     <Window x="200px" y="100px" title="Resume">
-      <div>
-        <canvas className={css.resumeCanvas} ref={pdfCanvasRef} />
-      </div>
+      <canvas className={css.resumeCanvas} ref={pdfCanvasRef} />
     </Window>
   );
 };
