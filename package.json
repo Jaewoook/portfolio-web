@@ -34,6 +34,7 @@
     "typescript": "^5.1.6"
   },
   "dependencies": {
+    "@next/third-parties": "^14.2.1",
     "@vanilla-extract/css": "^1.14.0",
     "@vanilla-extract/dynamic": "^2.1.0",
     "@vanilla-extract/recipes": "^0.5.1",
