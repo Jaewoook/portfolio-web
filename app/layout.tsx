@@ -1,3 +1,4 @@
+import { GoogleAnalytics } from "@next/third-parties/google";
 import type { Metadata } from "next";
 import "normalize.css";
 
@@ -15,6 +16,7 @@ const RootLayout = ({ children }: PropsWithChildren) => {
           href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@200;300;400;500;600;700;800;900&display=swap"
           rel="stylesheet"
         />
+        {process.env.GA_ID ? <GoogleAnalytics gaId={process.env.GA_ID} /> : null}
       </head>
       <body>
         <main className={main}>
