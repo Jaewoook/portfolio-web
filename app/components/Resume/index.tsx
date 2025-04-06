@@ -7,7 +7,7 @@ import { Window } from "../Window";
 import { PDFRenderer } from "../../modules/pdf-renderer";
 import * as css from "./Resume.css";
 
-const RESUME_PATH = "/resume_en.pdf";
+const RESUME_PATH = "/resume.pdf";
 
 export const Resume = () => {
   const pdfRenderer = useRef<PDFRenderer | null>(null);
