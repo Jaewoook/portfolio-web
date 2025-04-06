@@ -201,9 +201,10 @@ export class PDFRenderer {
    *
    * @param canvasEl output canvas element
    * @param pageIndex index of render requested page
-   * @param renderScale render scale factor
+   * @param renderScale render scale factor to perform rendering
+   * @param outputScale output scale factor to apply rendered image to output canvas
    */
-  private _prepareRender(canvasEl: HTMLCanvasElement | null, pageIndex: number, renderScale: number) {
+  private _prepareRender(canvasEl: HTMLCanvasElement | null, pageIndex: number, renderScale: number, outputScale: number) {
     if (pageIndex < 0 || this.document.pageCount - 1 < pageIndex) {
       console.warn("[PDF Renderer] _prepareRender: pageIndex out of bound.");
       return;
@@ -234,8 +235,8 @@ export class PDFRenderer {
     console.log("[PDF Renderer] _createPageBitmap");
     this._createPageBitmap(currentPage);
 
-    canvasEl.width = width;
-    canvasEl.height = height;
+    canvasEl.width = width * outputScale;
+    canvasEl.height = height * outputScale;
   }
 
   /**
@@ -273,9 +274,10 @@ export class PDFRenderer {
    *
    * @param canvasEl output canvas element
    * @param pageIndex index of render requested page
+   * @param outputScale output scale factor to apply rendered image to output canvas
    * @returns void type promise object
    */
-  private async _drawBitmap(canvasEl: HTMLCanvasElement | null, pageIndex: number) {
+  private async _drawBitmap(canvasEl: HTMLCanvasElement | null, pageIndex: number, outputScale = 1) {
     const context = canvasEl?.getContext("2d");
 
     if (!canvasEl || !context) {
@@ -295,8 +297,7 @@ export class PDFRenderer {
       )
     );
     const renderedBitmap = await createImageBitmap(renderedImageData);
-    context.drawImage(renderedBitmap, 0, 0, width, height);
-    // context.putImageData(imageData, 0, 0);
+    context.drawImage(renderedBitmap, 0, 0, width, height, 0, 0, width / outputScale, height / outputScale);
   }
 
   /**
@@ -305,15 +306,16 @@ export class PDFRenderer {
    * @param targetCanvasEl render output canvas element
    * @param pageIndex index of render requested page
    * @param renderScale render scale factor (default: 1.0)
+   * @param outputScale output scale factor (default: 1.0)
    */
-  render(targetCanvasEl: HTMLCanvasElement | null, pageIndex: number, renderScale: number = 1.0) {
+  render(targetCanvasEl: HTMLCanvasElement | null, pageIndex: number, renderScale = 1.0, outputScale = 1.0) {
     console.log("[PDF Renderer] render triggered!");
 
     console.log("[PDF Renderer] _prepareRender");
-    this._prepareRender(targetCanvasEl, pageIndex, renderScale);
+    this._prepareRender(targetCanvasEl, pageIndex, renderScale, outputScale);
     console.log("[PDF Renderer] _renderToBitmap");
     this._renderToBitmap(pageIndex);
     console.log("[PDF Renderer] _drawBitmapp");
-    this._drawBitmap(targetCanvasEl, pageIndex);
+    this._drawBitmap(targetCanvasEl, pageIndex, renderScale);
   }
 }

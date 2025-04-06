@@ -7,6 +7,8 @@ import { Window } from "../Window";
 import { PDFRenderer } from "../../modules/pdf-renderer";
 import * as css from "./Resume.css";
 
+const RESUME_PATH = "/resume_en.pdf";
+
 export const Resume = () => {
   const pdfRenderer = useRef<PDFRenderer | null>(null);
   const pdfCanvasRef = useRef<HTMLCanvasElement>(null);
@@ -15,14 +17,14 @@ export const Resume = () => {
     try {
       const PDFiumModule = await PDFium();
       PDFiumModule._FPDF_InitLibrary();
-      const resumePDFResponse = await axios.get<ArrayBuffer>("/resume_en.pdf", {
+      const resumePDFResponse = await axios.get<ArrayBuffer>(RESUME_PATH, {
         responseType: "arraybuffer",
       });
       const byteArray = new Uint8Array(resumePDFResponse.data);
       pdfRenderer.current = new PDFRenderer(byteArray);
       pdfRenderer.current.openDocument();
       pdfRenderer.current.openPage(0);
-      pdfRenderer.current.render(pdfCanvasRef.current, 0);
+      pdfRenderer.current.render(pdfCanvasRef.current, 0, 1.5, 1 / 1.5);
       pdfCanvasRef.current?.getContext("2d");
     } catch (err) {
       console.error(err);
